@@ -1,0 +1,14 @@
+PODS:
+  - MJSnackBar (0.1.0)
+
+DEPENDENCIES:
+  - MJSnackBar (from `../`)
+
+EXTERNAL SOURCES:
+  MJSnackBar:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  MJSnackBar: 3d0ca193ca4d43278151e3452f447e760c86006e
+
+COCOAPODS: 0.39.0
