@@ -23,6 +23,8 @@ Maxime Junger, maxime.junger@epitech.eu
 
 MJSnackBar is a pure Swift implementation of the [Android SnackBar](https://www.google.com/design/spec/components/snackbars-toasts.html#snackbars-toasts-usage) which is very useful to display short informations and allow user to perform an action about it. It automatically disappear after a delay that you can set.
 
+![MJSnackBar](http://imgur.com/kwWNE0Y)
+
 ## Installation
 
 #### Pod (Recommended) :
