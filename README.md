@@ -1,3 +1,13 @@
+<!--
+@Author: Maxime JUNGER <junger_m>
+@Date:   02-04-2016
+@Email:  maximejunger@gmail.com
+@Last modified by:   junger_m
+@Last modified time: 02-04-2016
+-->
+
+
+
 # MJSnackBar
 
 [![CI Status](http://img.shields.io/travis/Maxime Junger/MJSnackBar.svg?style=flat)](https://travis-ci.org/Maxime Junger/MJSnackBar)
