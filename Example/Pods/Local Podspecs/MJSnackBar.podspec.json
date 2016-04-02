@@ -1,0 +1,25 @@
+{
+  "name": "MJSnackBar",
+  "version": "0.1.0",
+  "summary": "A short description of MJSnackBar.",
+  "description": "",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/MJSnackBar",
+  "license": "MIT",
+  "authors": {
+    "Maxime Junger": "maxime.junger@epitech.eu"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/MJSnackBar.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*",
+  "resource_bundles": {
+    "MJSnackBar": [
+      "Pod/Assets/*.png"
+    ]
+  }
+}
