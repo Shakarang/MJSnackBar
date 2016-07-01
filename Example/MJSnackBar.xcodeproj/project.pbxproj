@@ -192,6 +192,7 @@
 				C85B9B126B9303DEE52FAD63 /* Embed Pods Frameworks */,
 				111FB37512D1F483CF4CB880 /* Copy Pods Resources */,
 				790C78051CAFCAE600467F28 /* Embed Frameworks */,
+				797EBCBF1D26E7890000D088 /* Swift Lint */,
 			);
 			buildRules = (
 			);
@@ -326,6 +327,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MJSnackBar_Tests/Pods-MJSnackBar_Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		797EBCBF1D26E7890000D088 /* Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Lint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		9A3C2DBCD32AE1C8E6BE2659 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  MJSnackBar: 3d0ca193ca4d43278151e3452f447e760c86006e
+  MJSnackBar: dfdfef77eca0bd767450fdb81afb18dcc3c2553d
 
 COCOAPODS: 0.39.0

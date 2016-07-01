@@ -93,3 +93,8 @@ MJSnackBar is available under the MIT license. See the LICENSE file for more inf
 - added an official material style
 - remove action UIButton and replaced it with a text
 - click handler on all the view
+
+## Must add
+- remove right button
+- handle resize of view
+- view on iPad
