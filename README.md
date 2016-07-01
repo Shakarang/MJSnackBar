@@ -1,23 +1,9 @@
-<!--
-@Author: Maxime JUNGER <junger_m>
-@Date:   02-04-2016
-@Email:  maximejunger@gmail.com
-@Last modified by:   junger_m
-@Last modified time: 02-04-2016
--->
-
-
-
 # MJSnackBar
 
 <!--[![CI Status](http://img.shields.io/travis/Maxime Junger/MJSnackBar.svg?style=flat)](https://travis-ci.org/Maxime Junger/MJSnackBar)-->
 [![Version](https://img.shields.io/cocoapods/v/MJSnackBar.svg?style=flat)](http://cocoapods.org/pods/MJSnackBar)
 [![License](https://img.shields.io/cocoapods/l/MJSnackBar.svg?style=flat)](http://cocoapods.org/pods/MJSnackBar)
 [![Platform](https://img.shields.io/cocoapods/p/MJSnackBar.svg?style=flat)](http://cocoapods.org/pods/MJSnackBar)
-
-## Author
-
-Maxime Junger, maxime.junger@epitech.eu
 
 ## About
 
@@ -102,3 +88,8 @@ sn.dismiss()
 ## License
 
 MJSnackBar is available under the MIT license. See the LICENSE file for more info.
+
+## Currently on dev branch
+- added an official material style
+- remove action UIButton and replaced it with a text
+- click handler on all the view
