@@ -209,11 +209,30 @@ public class MJSnackBar: NSObject {
 			width: textWidth,
 			height: textSize.height))
 		
+		let hght = _snackBarActionText?.frame.size
+		
+		_snackBarLeftActionText.numberOfLines = 30
 		_snackBarLeftActionText.text = message
 		_snackBarLeftActionText.textColor = UIColor.init(netHex: _leftActionTextColor)
 		_snackBarLeftActionText.font = UIFont.systemFontOfSize(_leftActionTextSize)
 		
+		_snackBarLeftActionText?.frame = CGRectMake((_snackBarLeftActionText?.frame.origin.x)!, (_snackBarLeftActionText?.frame.origin.y)!, (_snackBarLeftActionText?.frame.size.width)!, (_snackBarLeftActionText?.requiredHeight())!)
+		let nf = _snackBarLeftActionText?.frame.size
+		let h = _snackBarLeftActionText?.requiredHeight()
+		
+		
+		let snHeight = 48 + _snackBarLeftActionText.frame.size.height
+		let positionY = CGFloat(_screenSize.height) - CGFloat(snHeight)
+		
+		_snackBarView?.frame = CGRectMake((_snackBarView?.frame.origin.x)!, positionY, (_snackBarView?.frame.size.width)!,
+		                                  snHeight)
+		
+		
 		_snackBarView.addSubview(_snackBarLeftActionText!)
+		
+		
+		
+		
 	}
 	
 	/**
@@ -306,5 +325,22 @@ public class MJSnackBar: NSObject {
 	*/
 	func tapOnViewHandler(sender: AnyObject) {
 		dismiss()
+	}
+	
+}
+
+extension UILabel {
+	
+	func requiredHeight() -> CGFloat {
+		
+		let label: UILabel = UILabel(frame: CGRectMake(0, 0, self.frame.width, CGFloat.max))
+		label.numberOfLines = 0
+		label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+		label.font = self.font
+		label.text = self.text
+		
+		label.sizeToFit()
+		
+		return label.frame.height
 	}
 }

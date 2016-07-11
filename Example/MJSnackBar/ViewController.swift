@@ -39,7 +39,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		customSnackBar["actionButtonTextColorSelected"] = 0xFF0000
 
 		// snackbar = MJSnackBar(custom: customSnackBar)
-		snackbar = MJSnackBar(type: MJSnackBar.SnackType.OFFICIAL)
+		snackbar = MJSnackBar(type: MJSnackBar.SnackType.ANDROID)
 	}
 
 	override func didReceiveMemoryWarning() {
