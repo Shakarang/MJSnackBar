@@ -27,6 +27,7 @@ public class MJSnackBar: NSObject {
 	private var _backgroundAlpha: CGFloat = 0.8
 	private var _corners: CGFloat = 3.0
 	private var _androidValues: Bool = false
+	private var _minimumHeight: Double = -1
 	
 	/**
 	Set all times used for SnackBar
@@ -129,8 +130,19 @@ public class MJSnackBar: NSObject {
 	}
 	
 	
-	private func defaultSnack() {
+	public func addCustomStyle(custom: Dictionary<String, Any>) {
 		
+		if let spaceOnSide = custom["spaceOnSide"] { _spaceOnSide = spaceOnSide as! Double }
+		if let spaceOnBottom = custom["spaceOnBottom"] { _spaceOnBottom = spaceOnBottom as! Double }
+		if let snackViewHeight = custom["snackViewHeight"] { _snackViewHeight = snackViewHeight as! Double }
+		if let backgroundColor = custom["backgroundColor"] { _backgroundColor = backgroundColor as! Int }
+		if let backgroundAlpha = custom["backgroundAlpha"] { _backgroundAlpha = backgroundAlpha as! CGFloat }
+		if let appearanceDuration = custom["appearanceDuration"] { _appearanceDuration = appearanceDuration as! Double }
+		if let animationTime = custom["animationTime"] { _animationTime = animationTime as! Double }
+		if let leftActionTextColor = custom["leftActionTextColor"] { _leftActionTextColor = leftActionTextColor as! Int }
+		if let actionButtonText = custom["actionButtonText"] {	_actionButtonText = actionButtonText as! String }
+		if let actionButtonTextColorNormal = custom["actionButtonTextColorNormal"] { _actionButtonTextColorNormal = actionButtonTextColorNormal as! Int }
+		if let actionButtonTextColorSelected = custom["actionButtonTextColorSelected"] { _actionButtonTextColorSelected = actionButtonTextColorSelected as! Int }
 	}
 	
 	/*!
@@ -140,18 +152,9 @@ public class MJSnackBar: NSObject {
 		_spaceOnSide = 0.0
 		_spaceOnBottom = 0.0
 		_corners = 0
-		
+		_minimumHeight = 48
 		_actionButtonTextColorNormal = 0xFF0000
 		_actionButtonTextColorSelected = 0x00FF00
-		//		if let snackViewHeight = custom["snackViewHeight"] { _snackViewHeight = snackViewHeight as! Double }
-		//		if let backgroundColor = custom["backgroundColor"] { _backgroundColor = backgroundColor as! Int }
-		//		if let backgroundAlpha = custom["backgroundAlpha"] { _backgroundAlpha = backgroundAlpha as! CGFloat }
-		//		if let appearanceDuration = custom["appearanceDuration"] { _appearanceDuration = appearanceDuration as! Double }
-		//		if let animationTime = custom["animationTime"] { _animationTime = animationTime as! Double }
-		//		if let leftActionTextColor = custom["leftActionTextColor"] { _leftActionTextColor = leftActionTextColor as! Int }
-		//		if let actionButtonText = custom["actionButtonText"] {	_actionButtonText = actionButtonText as! String }
-		//		if let actionButtonTextColorNormal = custom["actionButtonTextColorNormal"] { _actionButtonTextColorNormal = actionButtonTextColorNormal as! Int }
-		//		if let actionButtonTextColorSelected = custom["actionButtonTextColorSelected"] { _actionButtonTextColorSelected = actionButtonTextColorSelected as! Int }
 	}
 	
 	/**
@@ -227,7 +230,7 @@ public class MJSnackBar: NSObject {
 		let nf = _snackBarLeftActionText?.frame.size
 		let h = _snackBarLeftActionText?.requiredHeight()
 		
-		let snHeight: CGFloat
+		var snHeight: CGFloat
 		
 		if (_androidValues == true) {
 			
@@ -238,6 +241,10 @@ public class MJSnackBar: NSObject {
 			}
 		} else {
 			snHeight = _snackBarItemsSideSize + _snackBarLeftActionText.frame.size.height
+		}
+		
+		if (self._minimumHeight > -1 && Double(snHeight) < self._minimumHeight) {
+			snHeight = CGFloat(self._minimumHeight)
 		}
 		
 		let positionY = CGFloat(_screenSize.height) - CGFloat(snHeight)

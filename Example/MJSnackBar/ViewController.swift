@@ -26,20 +26,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		self.edgesForExtendedLayout = .None
 
 		var customSnackBar = Dictionary<String, Any>()
-		customSnackBar["spaceOnSide"] = 5.0
-		customSnackBar["spaceOnBottom"] = 5.0
-		customSnackBar["snackViewHeight"] = 50.0
-		customSnackBar["backgroundColor"] = 0x1D1D1D
-		customSnackBar["backgroundAlpha"] = CGFloat(0.8)
-		customSnackBar["appearanceDuration"] = 4.0
-		customSnackBar["animationTime"] = 0.3
-		customSnackBar["leftActionTextColor"] = 0xFFFFFF
-		customSnackBar["actionButtonText"] = "Undo"
-		customSnackBar["actionButtonTextColorNormal"] = 0xFFFFFF
-		customSnackBar["actionButtonTextColorSelected"] = 0xFF0000
+//		customSnackBar["spaceOnSide"] = 5.0
+//		customSnackBar["spaceOnBottom"] = 5.0
+//		customSnackBar["snackViewHeight"] = 50.0
+//		customSnackBar["backgroundColor"] = 0x1D1D1D
+//		customSnackBar["backgroundAlpha"] = CGFloat(0.8)
+//		customSnackBar["appearanceDuration"] = 4.0
+//		customSnackBar["animationTime"] = 0.3
+//		customSnackBar["leftActionTextColor"] = 0xFFFFFF
+//		customSnackBar["actionButtonText"] = "Undo"
+//		customSnackBar["actionButtonTextColorNormal"] = 0xFFFFFF
+//		customSnackBar["actionButtonTextColorSelected"] = 0xFF0000
 
-		 snackbar = MJSnackBar(custom: customSnackBar)
-		//snackbar = MJSnackBar(type: MJSnackBar.SnackType.ANDROID)
+		// snackbar = MJSnackBar(custom: customSnackBar)
+		
+		snackbar = MJSnackBar(type: MJSnackBar.SnackType.ANDROID)
 	}
 
 	override func didReceiveMemoryWarning() {
