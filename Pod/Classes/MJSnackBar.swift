@@ -26,6 +26,7 @@ public class MJSnackBar: NSObject {
 	private var _backgroundColor: Int = 0x1D1D1D
 	private var _backgroundAlpha: CGFloat = 0.8
 	private var _corners: CGFloat = 3.0
+	private var _androidValues: Bool = false
 	
 	/**
 	Set all times used for SnackBar
@@ -114,6 +115,7 @@ public class MJSnackBar: NSObject {
 		
 		switch type {
 		case .ANDROID:
+			_androidValues = true
 			officialSnack()
 			break
 		default:
@@ -211,27 +213,49 @@ public class MJSnackBar: NSObject {
 		
 		let hght = _snackBarActionText?.frame.size
 		
-		_snackBarLeftActionText.numberOfLines = 30
+		_snackBarLeftActionText.lineBreakMode = .ByWordWrapping
+		_snackBarLeftActionText.numberOfLines = 0
 		_snackBarLeftActionText.text = message
 		_snackBarLeftActionText.textColor = UIColor.init(netHex: _leftActionTextColor)
 		_snackBarLeftActionText.font = UIFont.systemFontOfSize(_leftActionTextSize)
 		
 		_snackBarLeftActionText?.frame = CGRectMake((_snackBarLeftActionText?.frame.origin.x)!, (_snackBarLeftActionText?.frame.origin.y)!, (_snackBarLeftActionText?.frame.size.width)!, (_snackBarLeftActionText?.requiredHeight())!)
+		
+		
+		let neededLinesForLabel = _snackBarLeftActionText.frame.height / textSize.height
+		
 		let nf = _snackBarLeftActionText?.frame.size
 		let h = _snackBarLeftActionText?.requiredHeight()
 		
+		let snHeight: CGFloat
 		
-		let snHeight = 48 + _snackBarLeftActionText.frame.size.height
+		if (_androidValues == true) {
+			
+			if (neededLinesForLabel < 2) {
+				snHeight = 28 + _snackBarLeftActionText.frame.size.height
+			} else {
+				snHeight = 48 + _snackBarLeftActionText.frame.size.height
+			}
+		} else {
+			snHeight = _snackBarItemsSideSize + _snackBarLeftActionText.frame.size.height
+		}
+		
 		let positionY = CGFloat(_screenSize.height) - CGFloat(snHeight)
 		
-		_snackBarView?.frame = CGRectMake((_snackBarView?.frame.origin.x)!, positionY, (_snackBarView?.frame.size.width)!,
+		_snackBarView?.frame = CGRectMake((_snackBarView?.frame.origin.x)!, CGFloat(_screenSize.height) + 1, (_snackBarView?.frame.size.width)!,
 		                                  snHeight)
 		
-		
+		_snackViewHeight = Double(snHeight)
 		_snackBarView.addSubview(_snackBarLeftActionText!)
+	}
+	
+	private func adjustViews() {
 		
+		let snackMiddle = _snackBarView.frame.height / 2
 		
+		_snackBarActionText?.frame = CGRectMake((_snackBarActionText?.frame.origin.x)!, (snackMiddle - CGFloat((_snackBarActionText?.frame.height)!) / 2), (_snackBarActionText?.frame.size.width)!, (_snackBarActionText?.frame.height)!)
 		
+		_snackBarLeftActionText?.frame = CGRectMake((_snackBarLeftActionText?.frame.origin.x)!, (snackMiddle - CGFloat((_snackBarLeftActionText?.frame.height)!) / 2), (_snackBarLeftActionText?.frame.size.width)!, (_snackBarLeftActionText?.frame.height)!)
 		
 	}
 	
@@ -262,12 +286,15 @@ public class MJSnackBar: NSObject {
 	private func showSnackView(onView: UIView, message: String, completion: ()->()) {
 		_animating = true
 		addActionText(message)
+		adjustViews()
 		onView.addSubview(_snackBarView)
+		
 		UIView.animateWithDuration(_animationTime, animations: { _ in
 			self._snackBarView.frame = CGRect(x: self._spaceOnSide,
 				y: Double(self._screenSize.height) - (self._spaceOnBottom + self._snackViewHeight),
 				width: Double(self._screenSize.width) - (self._spaceOnSide * 2),
 				height: self._snackViewHeight)
+			
 			}, completion: { _ in
 				self._animating = false
 				self._shown = true
@@ -305,9 +332,9 @@ public class MJSnackBar: NSObject {
 		}
 		_animating = true
 		UIView.animateWithDuration(_animationTime, animations: { _ in
-			self._snackBarView.frame = CGRect(x: self._spaceOnSide,
+			self._snackBarView.frame = CGRect(x: Double(self._snackBarView.frame.origin.x),
 				y: Double(self._screenSize.height) + 1,
-				width: Double(self._screenSize.width) - (self._spaceOnSide * 2),
+				width: Double(self._snackBarView.frame.width),
 				height: self._snackViewHeight)
 			
 			}, completion: {_ in

@@ -38,8 +38,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		customSnackBar["actionButtonTextColorNormal"] = 0xFFFFFF
 		customSnackBar["actionButtonTextColorSelected"] = 0xFF0000
 
-		// snackbar = MJSnackBar(custom: customSnackBar)
-		snackbar = MJSnackBar(type: MJSnackBar.SnackType.ANDROID)
+		 snackbar = MJSnackBar(custom: customSnackBar)
+		//snackbar = MJSnackBar(type: MJSnackBar.SnackType.ANDROID)
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -73,7 +73,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			let savedPos = indexPath
 			dataArray.removeAtIndex(indexPath.row)
 			tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-			snackbar.show(self.view, message: "Deleted slslslslsllslslslslslslslslslslslslslslslslsllslslslsl: " + savedString, completion: {reason in
+			
+			var msg = "Deleted :"
+			if (indexPath.row == 0) {
+				msg += "zbcyrzbcreuybceruyfbrefyuberfyughrfyurebetuiyvgsdivukhesuycfngeuhgeruqfghnuehjgbcekuhqjsdfgnxcukqxesfknxgqy,xsdknw<fxgqsdnfxqgrhndkhiu "
+			}
+			
+			snackbar.show(self.view, message: msg + savedString, completion: {reason in
 				// Handle the way the view disappeared nicely
 				if reason == MJSnackBar.EndShowingType.USER {
 					self.dataArray.insert(savedString, atIndex: savedPos.row)
