@@ -131,7 +131,6 @@ public class MJSnackBar: NSObject {
 	
 	
 	public func addCustomStyle(custom: Dictionary<String, Any>) {
-		
 		if let spaceOnSide = custom["spaceOnSide"] { _spaceOnSide = spaceOnSide as! Double }
 		if let spaceOnBottom = custom["spaceOnBottom"] { _spaceOnBottom = spaceOnBottom as! Double }
 		if let snackViewHeight = custom["snackViewHeight"] { _snackViewHeight = snackViewHeight as! Double }
@@ -153,6 +152,8 @@ public class MJSnackBar: NSObject {
 		_spaceOnBottom = 0.0
 		_corners = 0
 		_minimumHeight = 48
+		_backgroundColor = 0x323232
+		_backgroundAlpha = 1
 		_actionButtonTextColorNormal = 0xFF0000
 		_actionButtonTextColorSelected = 0x00FF00
 	}
@@ -171,7 +172,6 @@ public class MJSnackBar: NSObject {
 		
 		_snackBarView.layer.cornerRadius = _corners
 		_snackBarView.layer.masksToBounds = true
-		addActionButton()
 	}
 	
 	
@@ -292,6 +292,7 @@ public class MJSnackBar: NSObject {
 	
 	private func showSnackView(onView: UIView, message: String, completion: ()->()) {
 		_animating = true
+		addActionButton()
 		addActionText(message)
 		adjustViews()
 		onView.addSubview(_snackBarView)

@@ -35,12 +35,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //		customSnackBar["animationTime"] = 0.3
 //		customSnackBar["leftActionTextColor"] = 0xFFFFFF
 //		customSnackBar["actionButtonText"] = "Undo"
-//		customSnackBar["actionButtonTextColorNormal"] = 0xFFFFFF
+		customSnackBar["actionButtonTextColorNormal"] = 0x00FF00
 //		customSnackBar["actionButtonTextColorSelected"] = 0xFF0000
 
 		// snackbar = MJSnackBar(custom: customSnackBar)
 		
 		snackbar = MJSnackBar(type: MJSnackBar.SnackType.ANDROID)
+		snackbar.addCustomStyle(customSnackBar)
 	}
 
 	override func didReceiveMemoryWarning() {
