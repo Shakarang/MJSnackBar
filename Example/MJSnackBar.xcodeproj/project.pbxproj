@@ -14,8 +14,6 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		790C78031CAFCAE600467F28 /* MJSnackBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790C78021CAFCAE600467F28 /* MJSnackBar.framework */; };
-		790C78041CAFCAE600467F28 /* MJSnackBar.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 790C78021CAFCAE600467F28 /* MJSnackBar.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7FCD72B894406DA9BD9E249D /* Pods_MJSnackBar_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB194859FAD7FD1A4A8C4B2 /* Pods_MJSnackBar_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,7 +34,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				790C78041CAFCAE600467F28 /* MJSnackBar.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -58,7 +55,6 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		6451810294BB9D6E1F83A01A /* Pods-MJSnackBar_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MJSnackBar_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MJSnackBar_Example/Pods-MJSnackBar_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		790C78021CAFCAE600467F28 /* MJSnackBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MJSnackBar.framework; path = "/Users/junger_m/Library/Developer/Xcode/DerivedData/MJSnackBar-hacuvymgufuzeqedwltfqdsarheo/Build/Products/Debug-iphoneos/MJSnackBar.framework"; sourceTree = "<absolute>"; };
 		7C9417E61F2FD7349076B77C /* Pods_MJSnackBar_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MJSnackBar_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9484848FB462A02C08343D71 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		D421E083D4B05D8A00A61B18 /* MJSnackBar.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = MJSnackBar.podspec; path = ../MJSnackBar.podspec; sourceTree = "<group>"; };
@@ -71,7 +67,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				790C78031CAFCAE600467F28 /* MJSnackBar.framework in Frameworks */,
 				5C4455B088EAC18A0DB86315 /* Pods_MJSnackBar_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,7 +85,6 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
-				790C78021CAFCAE600467F28 /* MJSnackBar.framework */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for MJSnackBar */,
 				607FACE81AFB9204008FA782 /* Tests */,

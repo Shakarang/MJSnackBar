@@ -83,6 +83,7 @@ public class MJSnackBar: NSObject {
 		_shown = false
 		_animating = false
 		createView()
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "rotated", name: UIDeviceOrientationDidChangeNotification, object: nil)
 	}
 	
 	/**
@@ -108,6 +109,8 @@ public class MJSnackBar: NSObject {
 		_shown = false
 		_animating = false
 		createView()
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "rotated", name: UIDeviceOrientationDidChangeNotification, object: nil)
+		
 	}
 	
 	public init(type: SnackType) {
@@ -127,6 +130,7 @@ public class MJSnackBar: NSObject {
 		_shown = false
 		_animating = false
 		createView()
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "rotated", name: UIDeviceOrientationDidChangeNotification, object: nil)
 	}
 	
 	
@@ -156,17 +160,45 @@ public class MJSnackBar: NSObject {
 		_backgroundAlpha = 1
 		_actionButtonTextColorNormal = 0xFF0000
 		_actionButtonTextColorSelected = 0x00FF00
+		
+		self.changePropertiesIfIPad()
+	}
+	
+	private func changePropertiesIfIPad() {
+		
+		let orientation = UIApplication.sharedApplication().statusBarOrientation
+		
+		if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Pad {
+			let screenHeight: CGFloat = UIScreen.mainScreen().bounds.height
+			let screenWidth: CGFloat = UIScreen.mainScreen().bounds.width
+			
+			if orientation.isLandscape {
+				let restSpace = screenHeight - 568
+				_spaceOnSide = Double(restSpace) / 2
+			}
+			
+			
+		}
+		
 	}
 	
 	/**
 	Creates the SnackBar main view with all properties
 	*/
 	private func createView() {
+		let orientation = UIDevice.currentDevice().orientation
 		
-		_snackBarView = UIView(frame: CGRect(x: _spaceOnSide,
-			y: Double(_screenSize.height) + 1,
-			width: Double(_screenSize.width) - (_spaceOnSide * 2),
-			height: _snackViewHeight))
+		if (orientation == UIDeviceOrientation.LandscapeRight || orientation == UIDeviceOrientation.LandscapeLeft) {
+			_snackBarView = UIView(frame: CGRect(x: _spaceOnSide,
+				y: Double(_screenSize.width) + 1,
+				width: Double(_screenSize.height) - (_spaceOnSide * 2),
+				height: _snackViewHeight))
+		} else {
+			_snackBarView = UIView(frame: CGRect(x: _spaceOnSide,
+				y: Double(_screenSize.height) + 1,
+				width: Double(_screenSize.width) - (_spaceOnSide * 2),
+				height: _snackViewHeight))
+		}
 		_snackBarView.backgroundColor = UIColor.init(netHex: _backgroundColor)
 		_snackBarView.backgroundColor = _snackBarView.backgroundColor?.colorWithAlphaComponent(_backgroundAlpha)
 		
@@ -298,11 +330,19 @@ public class MJSnackBar: NSObject {
 		onView.addSubview(_snackBarView)
 		
 		UIView.animateWithDuration(_animationTime, animations: { _ in
-			self._snackBarView.frame = CGRect(x: self._spaceOnSide,
-				y: Double(self._screenSize.height) - (self._spaceOnBottom + self._snackViewHeight),
-				width: Double(self._screenSize.width) - (self._spaceOnSide * 2),
-				height: self._snackViewHeight)
+			let orientation = UIApplication.sharedApplication().statusBarOrientation
 			
+			if orientation.isLandscape {
+				self._snackBarView.frame = CGRect(x: self._spaceOnSide,
+					y: Double(self._screenSize.width) - (self._spaceOnBottom + self._snackViewHeight),
+					width: Double(self._screenSize.height) - (self._spaceOnSide * 2),
+					height: self._snackViewHeight)
+			} else {
+				self._snackBarView.frame = CGRect(x: self._spaceOnSide,
+					y: Double(self._screenSize.height) - (self._spaceOnBottom + self._snackViewHeight),
+					width: Double(self._screenSize.width) - (self._spaceOnSide * 2),
+					height: self._snackViewHeight)
+			}
 			}, completion: { _ in
 				self._animating = false
 				self._shown = true
@@ -340,11 +380,21 @@ public class MJSnackBar: NSObject {
 		}
 		_animating = true
 		UIView.animateWithDuration(_animationTime, animations: { _ in
-			self._snackBarView.frame = CGRect(x: Double(self._snackBarView.frame.origin.x),
-				y: Double(self._screenSize.height) + 1,
-				width: Double(self._snackBarView.frame.width),
-				height: self._snackViewHeight)
+			let orientation = UIApplication.sharedApplication().statusBarOrientation
 			
+			if orientation.isLandscape {
+				
+				self._snackBarView.frame = CGRect(x: Double(self._snackBarView.frame.origin.x),
+					y: Double(self._screenSize.width) + 1,
+					width: Double(self._snackBarView.frame.width),
+					height: self._snackViewHeight)
+			} else {
+				self._snackBarView.frame = CGRect(x: Double(self._snackBarView.frame.origin.x),
+					y: Double(self._screenSize.height) + 1,
+					width: Double(self._snackBarView.frame.width),
+					height: self._snackViewHeight)
+				
+			}
 			}, completion: {_ in
 				self._snackBarLeftActionText.removeFromSuperview()
 				self._snackBarView.removeFromSuperview()
@@ -360,6 +410,14 @@ public class MJSnackBar: NSObject {
 	*/
 	func tapOnViewHandler(sender: AnyObject) {
 		dismiss()
+	}
+	
+	func rotated() {
+		self._screenSize = UIScreen.mainScreen().bounds
+		self.createView()
+		if _androidValues{
+			officialSnack()
+		}
 	}
 	
 }
