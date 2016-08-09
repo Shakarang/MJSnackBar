@@ -169,11 +169,10 @@ public class MJSnackBar: NSObject {
 		let orientation = UIApplication.sharedApplication().statusBarOrientation
 		
 		if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Pad {
-			let screenHeight: CGFloat = UIScreen.mainScreen().bounds.height
 			let screenWidth: CGFloat = UIScreen.mainScreen().bounds.width
 			
 			if orientation.isLandscape {
-				let restSpace = screenHeight - 568
+				let restSpace = screenWidth - 568
 				_spaceOnSide = Double(restSpace) / 2
 			}
 			
@@ -392,10 +391,16 @@ public class MJSnackBar: NSObject {
 	}
 	
 	func rotated() {
+		
+		self.hideSnackView {
+
+		}
+		
 		let orientation = UIApplication.sharedApplication().statusBarOrientation
+		let orientation2 = UIDevice.currentDevice().orientation
 		
 		print(orientation.isPortrait)
-		
+		print(orientation.isPortrait)
 		self._screenSize = UIScreen.mainScreen().bounds
 		print("Screen height \(_screenSize.height) width : \(_screenSize.width)")
 		self.createView()
