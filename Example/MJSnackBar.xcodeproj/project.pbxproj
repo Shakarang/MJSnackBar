@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C4455B088EAC18A0DB86315 /* Pods_MJSnackBar_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9417E61F2FD7349076B77C /* Pods_MJSnackBar_Example.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		7FCD72B894406DA9BD9E249D /* Pods_MJSnackBar_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB194859FAD7FD1A4A8C4B2 /* Pods_MJSnackBar_Tests.framework */; };
+		797119821D5A093E009D1D5E /* MJSnackBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7971197F1D5A0927009D1D5E /* MJSnackBar.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +23,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
 			remoteInfo = MJSnackBar;
+		};
+		7971197E1D5A0927009D1D5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 797119791D5A0927009D1D5E /* MJSnackBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 797119521D5A0849009D1D5E;
+			remoteInfo = MJSnackBar;
+		};
+		797119801D5A0927009D1D5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 797119791D5A0927009D1D5E /* MJSnackBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7971195C1D5A0849009D1D5E;
+			remoteInfo = MJSnackBarTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -41,9 +54,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		33F66143A564A192F56E3E71 /* Pods-MJSnackBar_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MJSnackBar_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MJSnackBar_Tests/Pods-MJSnackBar_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		36CBB04FE422A69D5B926B43 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		527D83EEDCC9430C6A8A3D96 /* Pods-MJSnackBar_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MJSnackBar_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-MJSnackBar_Example/Pods-MJSnackBar_Example.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* MJSnackBar_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MJSnackBar_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -54,12 +64,7 @@
 		607FACE51AFB9204008FA782 /* MJSnackBar_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MJSnackBar_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		6451810294BB9D6E1F83A01A /* Pods-MJSnackBar_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MJSnackBar_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MJSnackBar_Example/Pods-MJSnackBar_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		7C9417E61F2FD7349076B77C /* Pods_MJSnackBar_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MJSnackBar_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9484848FB462A02C08343D71 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		D421E083D4B05D8A00A61B18 /* MJSnackBar.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = MJSnackBar.podspec; path = ../MJSnackBar.podspec; sourceTree = "<group>"; };
-		EAB194859FAD7FD1A4A8C4B2 /* Pods_MJSnackBar_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MJSnackBar_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EF0FA49BD6E11759331DAD21 /* Pods-MJSnackBar_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MJSnackBar_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MJSnackBar_Tests/Pods-MJSnackBar_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		797119791D5A0927009D1D5E /* MJSnackBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MJSnackBar.xcodeproj; path = ../MJSnackBar/MJSnackBar.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C4455B088EAC18A0DB86315 /* Pods_MJSnackBar_Example.framework in Frameworks */,
+				797119821D5A093E009D1D5E /* MJSnackBar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +80,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FCD72B894406DA9BD9E249D /* Pods_MJSnackBar_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,12 +89,10 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
-				607FACF51AFB993E008FA782 /* Podspec Metadata */,
+				797119791D5A0927009D1D5E /* MJSnackBar.xcodeproj */,
 				607FACD21AFB9204008FA782 /* Example for MJSnackBar */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
-				97F2C7E2A912CB4755AC8987 /* Pods */,
-				F4C0E007C847434776F06443 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -142,34 +144,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
+		7971197A1D5A0927009D1D5E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D421E083D4B05D8A00A61B18 /* MJSnackBar.podspec */,
-				9484848FB462A02C08343D71 /* README.md */,
-				36CBB04FE422A69D5B926B43 /* LICENSE */,
+				7971197F1D5A0927009D1D5E /* MJSnackBar.framework */,
+				797119811D5A0927009D1D5E /* MJSnackBarTests.xctest */,
 			);
-			name = "Podspec Metadata";
-			sourceTree = "<group>";
-		};
-		97F2C7E2A912CB4755AC8987 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				6451810294BB9D6E1F83A01A /* Pods-MJSnackBar_Example.debug.xcconfig */,
-				527D83EEDCC9430C6A8A3D96 /* Pods-MJSnackBar_Example.release.xcconfig */,
-				33F66143A564A192F56E3E71 /* Pods-MJSnackBar_Tests.debug.xcconfig */,
-				EF0FA49BD6E11759331DAD21 /* Pods-MJSnackBar_Tests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		F4C0E007C847434776F06443 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7C9417E61F2FD7349076B77C /* Pods_MJSnackBar_Example.framework */,
-				EAB194859FAD7FD1A4A8C4B2 /* Pods_MJSnackBar_Tests.framework */,
-			);
-			name = Frameworks;
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,12 +160,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "MJSnackBar_Example" */;
 			buildPhases = (
-				9A3C2DBCD32AE1C8E6BE2659 /* Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				C85B9B126B9303DEE52FAD63 /* Embed Pods Frameworks */,
-				111FB37512D1F483CF4CB880 /* Copy Pods Resources */,
 				790C78051CAFCAE600467F28 /* Embed Frameworks */,
 				797EBCBF1D26E7890000D088 /* Swift Lint */,
 			);
@@ -201,12 +179,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "MJSnackBar_Tests" */;
 			buildPhases = (
-				2D4969BD9B5F738CEACD936D /* Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				9C6B72B47BBCC2BD238F5E7A /* Embed Pods Frameworks */,
-				3670BDD408FE8C82C6C39EDC /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -248,6 +223,12 @@
 			mainGroup = 607FACC71AFB9204008FA782;
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7971197A1D5A0927009D1D5E /* Products */;
+					ProjectRef = 797119791D5A0927009D1D5E /* MJSnackBar.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				607FACCF1AFB9204008FA782 /* MJSnackBar_Example */,
@@ -255,6 +236,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7971197F1D5A0927009D1D5E /* MJSnackBar.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MJSnackBar.framework;
+			remoteRef = 7971197E1D5A0927009D1D5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		797119811D5A0927009D1D5E /* MJSnackBarTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MJSnackBarTests.xctest;
+			remoteRef = 797119801D5A0927009D1D5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		607FACCE1AFB9204008FA782 /* Resources */ = {
@@ -277,51 +275,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		111FB37512D1F483CF4CB880 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MJSnackBar_Example/Pods-MJSnackBar_Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2D4969BD9B5F738CEACD936D /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		3670BDD408FE8C82C6C39EDC /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MJSnackBar_Tests/Pods-MJSnackBar_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		797EBCBF1D26E7890000D088 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -335,51 +288,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
-		9A3C2DBCD32AE1C8E6BE2659 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		9C6B72B47BBCC2BD238F5E7A /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MJSnackBar_Tests/Pods-MJSnackBar_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C85B9B126B9303DEE52FAD63 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MJSnackBar_Example/Pods-MJSnackBar_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -515,13 +423,12 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6451810294BB9D6E1F83A01A /* Pods-MJSnackBar_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MJSnackBar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "demo.Shakarang.MJSnackBar-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -529,13 +436,12 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 527D83EEDCC9430C6A8A3D96 /* Pods-MJSnackBar_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MJSnackBar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "demo.Shakarang.MJSnackBar-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -543,7 +449,6 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33F66143A564A192F56E3E71 /* Pods-MJSnackBar_Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -564,7 +469,6 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EF0FA49BD6E11759331DAD21 /* Pods-MJSnackBar_Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
