@@ -1,19 +1,18 @@
 # MJSnackBar		
 
- <!--[![CI Status](http://img.shields.io/travis/Maxime Junger/MJSnackBar.svg?style=flat)](https://travisci.org/Maxime Junger/MJSnackBar)-->  
  [![Version](https://img.shields.io/cocoapods/v/MJSnackBar.svg?style=flat)](http://cocoapods.org/pods/MJSnackBar)			       
  [![License](https://img.shields.io/cocoapods/l/MJSnackBar.svg?style=flat)](http://cocoapods.org/pods/MJSnackBar)			        
  [![Platform](https://img.shields.io/cocoapods/p/MJSnackBar.svg?style=flat)](http://cocoapods.org/pods/MJSnackBar)				 
 
- ## About																	   
+## About																	   
 
  MJSnackBar is a pure Swift implementation of the [Android SnackBar](https://www.google.com/design/spec/components/snackbarstoasts.html#snackbarstoastsusage) which is very useful to display short informations and allow user to perform an action about it. It automatically disappear after a delay that you can set.  
 
  ![MJSnackBar demo](http://i.imgur.com/kwWNE0Y.gif)		
 
- ## Installation							
+## Installation							
 
- #### Pod (Recommended) :							
+#### Pod (Recommended) :							
  MJSnackBar is available through [CocoaPods](http://cocoapods.org). To install		
  it, simply add the following line to your Podfile:		     	
 
@@ -21,26 +20,26 @@
  pod "MJSnackBar"		
  ``` 				
 
- #### Manually (Not Recommended) :		
+#### Manually (Not Recommended) :		
  You can download the project and add the files manually but it won't be updated		
 
 
- ## Example Project		
+## Example Project		
 
  The included example project provides a demonstration of MJSnackBar. It's a UITableView with a little ToDo list. When you delete an item, the MJSnackBar is presented with a button allowing user to undo that action.  
 
- ## Usage
+## Usage
 
  To run the example project, clone the repo, and run `pod install` from the Example directory first.		
 
- ### Instantiate :		
+### Instantiate :		
 
- ##### Preconfigured way :		
+##### Preconfigured way :		
  ```swift	       	   
  let sb = MJSnackBar()		
  ``` 	 
 
- ##### Custom properties way :		
+##### Custom properties way :		
  You can configure some properties of MJSnackBar by passing a dictionary like this :		
  ```swift	    	 
  var customSnackBar = Dictionary<String, Any>() // Instantiate the dictionary		
@@ -61,7 +60,7 @@
  ``` 	 
  All parameters are optionals !		
 
- ### Displaying
+### Displaying
 
  To show the SnackBar, just use the show() method. It comes with a completion handler that let you know if the view disappeared due to the TIMER or if the user canceled it. You have two responses of MJSnackBar.EndShowingType :  
   TIMER     
@@ -77,7 +76,7 @@
 
  ```			
 
- ### Dismissing			
+### Dismissing			
 
  The MJSnackBar automatically disappear after the time entered in parameters or if the user pressed the action button.	 
  However, you can stop it manually by calling :   	
@@ -85,16 +84,16 @@
  sn.dismiss()
  ```			
 
- ## License				
+## License				
 
  MJSnackBar is available under the MIT license. See the LICENSE file for more info.		
 
- ## Currently on dev branch		
+## Currently on dev branch		
   added an official material style		
   remove action UIButton and replaced it with a text		
   click handler on all the view	   
 
- ## Must add		
+## Must add		
   remove right button		
   handle resize of view		
   view on iPad
