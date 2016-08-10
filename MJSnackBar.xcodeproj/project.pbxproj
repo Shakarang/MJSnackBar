@@ -7,32 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		797119561D5A0849009D1D5E /* MJSnackBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 797119551D5A0849009D1D5E /* MJSnackBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7971195D1D5A0849009D1D5E /* MJSnackBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797119521D5A0849009D1D5E /* MJSnackBar.framework */; };
-		797119621D5A0849009D1D5E /* MJSnackBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797119611D5A0849009D1D5E /* MJSnackBarTests.swift */; };
-		7971196E1D5A08B2009D1D5E /* MJSnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7971196C1D5A08B2009D1D5E /* MJSnackBar.swift */; };
-		7971196F1D5A08B2009D1D5E /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7971196D1D5A08B2009D1D5E /* UIColorExtension.swift */; };
+		79DDFE471D5B8BC200A2CE20 /* Source in Resources */ = {isa = PBXBuildFile; fileRef = 79DDFE461D5B8BC200A2CE20 /* Source */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		7971195E1D5A0849009D1D5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 797119491D5A0849009D1D5E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 797119511D5A0849009D1D5E;
-			remoteInfo = MJSnackBar;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		797119521D5A0849009D1D5E /* MJSnackBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MJSnackBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		797119551D5A0849009D1D5E /* MJSnackBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MJSnackBar.h; sourceTree = "<group>"; };
-		797119571D5A0849009D1D5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7971195C1D5A0849009D1D5E /* MJSnackBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MJSnackBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		797119611D5A0849009D1D5E /* MJSnackBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MJSnackBarTests.swift; sourceTree = "<group>"; };
-		797119631D5A0849009D1D5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7971196C1D5A08B2009D1D5E /* MJSnackBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJSnackBar.swift; sourceTree = "<group>"; };
-		7971196D1D5A08B2009D1D5E /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		79DDFE461D5B8BC200A2CE20 /* Source */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Source; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,22 +23,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		797119591D5A0849009D1D5E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7971195D1D5A0849009D1D5E /* MJSnackBar.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		797119481D5A0849009D1D5E = {
 			isa = PBXGroup;
 			children = (
-				797119541D5A0849009D1D5E /* MJSnackBar */,
-				797119601D5A0849009D1D5E /* MJSnackBarTests */,
+				79DDFE461D5B8BC200A2CE20 /* Source */,
 				797119531D5A0849009D1D5E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,29 +38,8 @@
 			isa = PBXGroup;
 			children = (
 				797119521D5A0849009D1D5E /* MJSnackBar.framework */,
-				7971195C1D5A0849009D1D5E /* MJSnackBarTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		797119541D5A0849009D1D5E /* MJSnackBar */ = {
-			isa = PBXGroup;
-			children = (
-				7971196C1D5A08B2009D1D5E /* MJSnackBar.swift */,
-				7971196D1D5A08B2009D1D5E /* UIColorExtension.swift */,
-				797119551D5A0849009D1D5E /* MJSnackBar.h */,
-				797119571D5A0849009D1D5E /* Info.plist */,
-			);
-			path = MJSnackBar;
-			sourceTree = "<group>";
-		};
-		797119601D5A0849009D1D5E /* MJSnackBarTests */ = {
-			isa = PBXGroup;
-			children = (
-				797119611D5A0849009D1D5E /* MJSnackBarTests.swift */,
-				797119631D5A0849009D1D5E /* Info.plist */,
-			);
-			path = MJSnackBarTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -99,7 +49,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				797119561D5A0849009D1D5E /* MJSnackBar.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,24 +73,6 @@
 			productReference = 797119521D5A0849009D1D5E /* MJSnackBar.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		7971195B1D5A0849009D1D5E /* MJSnackBarTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 797119691D5A0849009D1D5E /* Build configuration list for PBXNativeTarget "MJSnackBarTests" */;
-			buildPhases = (
-				797119581D5A0849009D1D5E /* Sources */,
-				797119591D5A0849009D1D5E /* Frameworks */,
-				7971195A1D5A0849009D1D5E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7971195F1D5A0849009D1D5E /* PBXTargetDependency */,
-			);
-			name = MJSnackBarTests;
-			productName = MJSnackBarTests;
-			productReference = 7971195C1D5A0849009D1D5E /* MJSnackBarTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -153,9 +84,6 @@
 				ORGANIZATIONNAME = Shakarang;
 				TargetAttributes = {
 					797119511D5A0849009D1D5E = {
-						CreatedOnToolsVersion = 7.3.1;
-					};
-					7971195B1D5A0849009D1D5E = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
 				};
@@ -173,7 +101,6 @@
 			projectRoot = "";
 			targets = (
 				797119511D5A0849009D1D5E /* MJSnackBar */,
-				7971195B1D5A0849009D1D5E /* MJSnackBarTests */,
 			);
 		};
 /* End PBXProject section */
@@ -183,13 +110,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7971195A1D5A0849009D1D5E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				79DDFE471D5B8BC200A2CE20 /* Source in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,28 +121,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7971196E1D5A08B2009D1D5E /* MJSnackBar.swift in Sources */,
-				7971196F1D5A08B2009D1D5E /* UIColorExtension.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		797119581D5A0849009D1D5E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				797119621D5A0849009D1D5E /* MJSnackBarTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		7971195F1D5A0849009D1D5E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 797119511D5A0849009D1D5E /* MJSnackBar */;
-			targetProxy = 7971195E1D5A0849009D1D5E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		797119641D5A0849009D1D5E /* Debug */ = {
@@ -323,7 +226,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MJSnackBar/Info.plist;
+				INFOPLIST_FILE = "Source/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -342,33 +245,13 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MJSnackBar/Info.plist;
+				INFOPLIST_FILE = "Source/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Shakarang.MJSnackBar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		7971196A1D5A0849009D1D5E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = MJSnackBarTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Shakarang.MJSnackBarTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		7971196B1D5A0849009D1D5E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = MJSnackBarTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Shakarang.MJSnackBarTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -389,15 +272,6 @@
 			buildConfigurations = (
 				797119671D5A0849009D1D5E /* Debug */,
 				797119681D5A0849009D1D5E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		797119691D5A0849009D1D5E /* Build configuration list for PBXNativeTarget "MJSnackBarTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7971196A1D5A0849009D1D5E /* Debug */,
-				7971196B1D5A0849009D1D5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
