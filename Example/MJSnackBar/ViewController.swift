@@ -77,7 +77,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
 			
 			var msg = "Deleted :"
-			if indexPath.row == 0 {
+			if (indexPath.row == 0) {
 				msg += "zbcyrzbcreuybceruyfbrefyuberfyughrfyurebetuiyvgsdivukhesuycfngeuhgeruqfghnuehjgbcekuhqjsdfgnxcukqxesfknxgqy,xsdknw<fxgqsdnfxqgrhndkhiu "
 			}
 			
