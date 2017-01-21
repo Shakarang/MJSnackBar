@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import MJSnackBar
+//import MJSnackBar
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	
-	var snackbar: MJSnackBar! = MJSnackBar()
+	var snackbar: MJSnackBar!
 	
 	var dataArray = [
 		"Walking the dog",
@@ -23,25 +23,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
 		
-		self.edgesForExtendedLayout = .None
-		
-		var customSnackBar = Dictionary<String, Any>()
-		//		customSnackBar["spaceOnSide"] = 5.0
-		//		customSnackBar["spaceOnBottom"] = 5.0
-		//		customSnackBar["snackViewHeight"] = 50.0
-		//		customSnackBar["backgroundColor"] = 0x1D1D1D
-		//		customSnackBar["backgroundAlpha"] = CGFloat(0.8)
-		//		customSnackBar["appearanceDuration"] = 4.0
-		//		customSnackBar["animationTime"] = 0.3
-		//		customSnackBar["leftActionTextColor"] = 0xFFFFFF
-		//		customSnackBar["actionButtonText"] = "Undo"
-		customSnackBar["actionButtonTextColorNormal"] = 0x00FF00
-		//		customSnackBar["actionButtonTextColorSelected"] = 0xFF0000
+		self.edgesForExtendedLayout = UIRectEdge()
 		
 		// snackbar = MJSnackBar(custom: customSnackBar)
-		
-		snackbar = MJSnackBar(type: MJSnackBar.SnackType.ANDROID)
-		snackbar.addCustomStyle(customSnackBar)
+		//snackbar = MJSnackBar(type: MJSnackBar.SnackType.android)
+        
+        snackbar = MJSnackBar(onView: self.view)
+        
+		//snackbar.addCustomStyle(customSnackBar)
 	}
 	
 	override func didReceiveMemoryWarning() {
@@ -49,15 +38,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		// Dispose of any resources that can be recreated.
 	}
 	
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
 	}
 	
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return dataArray.count
 	}
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = UITableViewCell()
 		
 		cell.textLabel?.text = dataArray[indexPath.row]
@@ -65,33 +54,35 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		return cell
 	}
 	
-	func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		return true
 	}
 	
-	func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-		if editingStyle == UITableViewCellEditingStyle.Delete {
+	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+		if editingStyle == UITableViewCellEditingStyle.delete {
 			let savedString = dataArray[indexPath.row]
 			let savedPos = indexPath
-			dataArray.removeAtIndex(indexPath.row)
-			tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+			dataArray.remove(at: indexPath.row)
+			tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
 			
-			var msg = "Deleted :"
-			if (indexPath.row == 0) {
-				msg += "zbcyrzbcreuybceruyfbrefyuberfyughrfyurebetuiyvgsdivukhesuycfngeuhgeruqfghnuehjgbcekuhqjsdfgnxcukqxesfknxgqy,xsdknw<fxgqsdnfxqgrhndkhiu "
-			}
-			
-			snackbar.show(self.view, message: msg + savedString, completion: {reason in
-				// Handle the way the view disappeared nicely
-				if reason == MJSnackBar.EndShowingType.USER {
-					self.dataArray.insert(savedString, atIndex: savedPos.row)
-					tableView.insertRowsAtIndexPaths([savedPos], withRowAnimation: UITableViewRowAnimation.Automatic)
-				}
-			})
+			var msg = savedString
+            
+            let data = MJSnackBar.SnackBarData(id: indexPath.row, message: msg, action: nil)
+            
+            snackbar.show(data: data, onView: self.view)
+            
+
+//			snackbar.show(onView: self.view, message: msg + savedString, completion: {reason in
+//				// Handle the way the view disappeared nicely
+//				if reason == MJSnackBar.EndShowingType.user {
+//					self.dataArray.insert(savedString, at: savedPos.row)
+//					tableView.insertRows(at: [savedPos], with: UITableViewRowAnimation.automatic)
+//				}
+//			})
 		}
 	}
 	
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		tableView.deselectRowAtIndexPath(indexPath, animated: true)
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
 	}
 }
