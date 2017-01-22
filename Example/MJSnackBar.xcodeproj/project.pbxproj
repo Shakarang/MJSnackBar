@@ -13,8 +13,10 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		79FB343B1D5F458800CE7064 /* MJSnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB34391D5F458800CE7064 /* MJSnackBar.swift */; };
-		79FB343C1D5F458800CE7064 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB343A1D5F458800CE7064 /* UIColorExtension.swift */; };
+		79B339581E3545F000FB34CD /* MJSnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B339521E3545F000FB34CD /* MJSnackBar.swift */; };
+		79B339591E3545F000FB34CD /* MJSnackBarData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B339531E3545F000FB34CD /* MJSnackBarData.swift */; };
+		79B3395A1E3545F000FB34CD /* MJSnackBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B339541E3545F000FB34CD /* MJSnackBarDelegate.swift */; };
+		79B3395B1E3545F000FB34CD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79B339561E3545F000FB34CD /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,8 +40,11 @@
 		607FACE51AFB9204008FA782 /* MJSnackBar_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MJSnackBar_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		79FB34391D5F458800CE7064 /* MJSnackBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MJSnackBar.swift; path = ../../Source/MJSnackBar.swift; sourceTree = "<group>"; };
-		79FB343A1D5F458800CE7064 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = ../../Source/UIColorExtension.swift; sourceTree = "<group>"; };
+		79B339521E3545F000FB34CD /* MJSnackBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJSnackBar.swift; sourceTree = "<group>"; };
+		79B339531E3545F000FB34CD /* MJSnackBarData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJSnackBarData.swift; sourceTree = "<group>"; };
+		79B339541E3545F000FB34CD /* MJSnackBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MJSnackBarDelegate.swift; sourceTree = "<group>"; };
+		79B339561E3545F000FB34CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79B339571E3545F000FB34CD /* MJSnackBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJSnackBar.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,8 +86,7 @@
 		607FACD21AFB9204008FA782 /* Example for MJSnackBar */ = {
 			isa = PBXGroup;
 			children = (
-				79FB34391D5F458800CE7064 /* MJSnackBar.swift */,
-				79FB343A1D5F458800CE7064 /* UIColorExtension.swift */,
+				79B339511E3545F000FB34CD /* Source */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -117,6 +121,27 @@
 				607FACEA1AFB9204008FA782 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		79B339511E3545F000FB34CD /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				79B339521E3545F000FB34CD /* MJSnackBar.swift */,
+				79B339531E3545F000FB34CD /* MJSnackBarData.swift */,
+				79B339541E3545F000FB34CD /* MJSnackBarDelegate.swift */,
+				79B339551E3545F000FB34CD /* Supporting Files */,
+			);
+			name = Source;
+			path = ../../Source;
+			sourceTree = "<group>";
+		};
+		79B339551E3545F000FB34CD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				79B339561E3545F000FB34CD /* Info.plist */,
+				79B339571E3545F000FB34CD /* MJSnackBar.h */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,6 +228,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79B3395B1E3545F000FB34CD /* Info.plist in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
@@ -240,10 +266,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79FB343B1D5F458800CE7064 /* MJSnackBar.swift in Sources */,
+				79B339591E3545F000FB34CD /* MJSnackBarData.swift in Sources */,
+				79B3395A1E3545F000FB34CD /* MJSnackBarDelegate.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-				79FB343C1D5F458800CE7064 /* UIColorExtension.swift in Sources */,
+				79B339581E3545F000FB34CD /* MJSnackBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
