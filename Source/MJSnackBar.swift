@@ -8,30 +8,45 @@
 
 import UIKit
 
+
 protocol MJSnackBarDelegate {
-    func snackBarAppeared(withData: MJSnackBar.SnackBarData)
-    func snackBarDisappeared(withData: MJSnackBar.SnackBarData, reason: MJSnackBar.EndShowingType)
+    func snackBarAppeared(with data: MJSnackBarData)
+    func snackBarDisappeared(with data: MJSnackBarData, reason: MJSnackBar.EndShowingType)
+    func snackBarActionTriggered(with data: MJSnackBarData)
 }
 
-class MJSnackBar: UIView, MJSnackBarDelegate {
- 
-    struct SnackBarData {
-        
-        var id: Int? = nil
-        var message: String
-        var action: String? = nil
-        
-        static func ==(left: SnackBarData, right: SnackBarData) -> Bool {
-            if left.id == right.id
-                && left.message == right.message
-                && left.action == right.action {
-                return true
-            }
-            return false
-        }
+struct MJSnackBarData {
+    
+    var id: Int? = nil
+    var message: String
+    var action: String? = nil
+    var originalObject: Any? = nil
+    
+    init(id: Int? = nil,
+         message: String,
+         action: String? = nil,
+         originalObject: Any? = nil) {
+        self.id = id
+        self.message = message
+        self.action = action
+        self.originalObject = originalObject
     }
     
-    var dataToDisplay = [SnackBarData]()
+    static func ==(left: MJSnackBarData, right: MJSnackBarData) -> Bool {
+        if left.id == right.id
+            && left.message == right.message
+            && left.action == right.action {
+            return true
+        }
+        return false
+    }
+}
+
+class MJSnackBar: UIView {
+    
+    
+    
+    var dataToDisplay = [MJSnackBarData]()
     
     /// Enum to know why SnackBar disappeared : due to Timer or User action
     ///
@@ -41,6 +56,9 @@ class MJSnackBar: UIView, MJSnackBarDelegate {
         case timer, over, user
     }
     
+    /// Delegate to let user create its own actions
+    public var delegate: MJSnackBarDelegate? = nil
+    
     /// Animation duration
     public var animationDuration: Double = 0.4
     
@@ -48,10 +66,24 @@ class MJSnackBar: UIView, MJSnackBarDelegate {
     public var timeSnackBarShown: Double = 2.0
     
     /// SnackBar height
-    public var snackBarHeight: CGFloat = 48.0
+    public var snackBarDefaultHeight: CGFloat = 48.0
+    
+    /// Allow the SnackBar height to automatically adjust
+    /// its height based on the content
+    public var allowHeightChange: Bool = true
     
     /// SnackBar margins
-
+    public var spaceBetweenElements: CGFloat = 24.0
+    
+    /// SnackBar side margins to view
+    public var sideMargins: CGFloat = 0.0
+    
+    /// SnackBar bottom margin to view
+    public var bottomMargin: CGFloat = 0.0
+    
+    /// SnackBar internal content margin
+    public var elementsTopBottomMargins: CGFloat = 14.0
+    
     /// Current view the bar is shown on
     private var showingOnView: UIView? = nil
     
@@ -68,82 +100,141 @@ class MJSnackBar: UIView, MJSnackBarDelegate {
     /// Also used for removing the view.
     private var snackBarID = 0
     
-    private var currentlyDisplayedData: SnackBarData? = nil
+    private var currentlyDisplayedData: MJSnackBarData? = nil
+    
+    
+    /// Font of displayed message
+    public var messageFont: UIFont? = nil
+    
+    /// Font of action button
+    public var actionFont: UIFont? = UIFont.boldSystemFont(ofSize: UIFont.labelFontSize)
+    
+    /// Message text color
+    public var messageColor: UIColor = .white
+    
+    /// Action text color
+    public var actionColorColor: UIColor = .red
+    
     
     public init(onView: UIView) {
         
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         
-        self.backgroundColor = UIColor(red:0.11, green:0.11, blue:0.11, alpha:1.0)
+        self.backgroundColor = UIColor(red:0.11, green:0.11, blue:0.11, alpha:0.8)
         self.showingOnView = onView
+        
+        self.isUserInteractionEnabled = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.snackBarTouched))
+        tapGesture.numberOfTapsRequired = 1
+        
+        self.addGestureRecognizer(tapGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    public func show(data: SnackBarData, onView view: UIView) {
+    /// Show snackbar on specific view with the given data.
+    ///
+    /// - Parameters:
+    ///   - data: data to show
+    ///   - view: where to show the snackbar
+    public func show(data: MJSnackBarData, onView view: UIView) {
+        
+        print("---------------------Show called-----------------------")
         
         if self.isCurrentlyShown {
-            self.animate(show: false, reasonToHide: .over) {
-                
+            print("Une vue existe \(data.message)")
+            //self.hide(afterDelay: false, reason: .over) {
+                self.animate(show: false, reasonToHide: .over) {
+                 
                 self.currentlyDisplayedData = data
-                self.snackBarID += 1
-                self.createSnackBar()
-                self.animate(show: true) { }
+                DispatchQueue.main.async {
+                    
+                    self.snackBarID += 1
+                    self.createSnackBar()
+                    
+                    self.animate(show: true) { }
+                }
             }
         } else {
+            print("Il ny en a pas \(data.message)")
             self.currentlyDisplayedData = data
             self.snackBarID += 1
-            self.createSnackBar()
-            self.animate(show: true) { }
+            DispatchQueue.main.async {
+                
+                self.createSnackBar()
+                
+                self.animate(show: true) { }
+            }
         }
     }
     
+    /// Create SnackBar with all data needed and add it to the view.
     private func createSnackBar() {
-        
         
         guard let view = self.showingOnView else {
             return
         }
         
+        for view in view.subviews {
+            if view is MJSnackBar {
+                self.addInformationToSnackBar()
+                return
+            }
+        }
+        
         self.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(self)
+        
+        self.addInformationToSnackBar()
         
         let leftConstraint = NSLayoutConstraint(item: self,
                                                 attribute: NSLayoutAttribute.leading,
                                                 relatedBy: NSLayoutRelation.equal,
                                                 toItem: view,
                                                 attribute: NSLayoutAttribute.leading,
-                                                multiplier: 1, constant: 0)
+                                                multiplier: 1, constant: self.sideMargins)
         
         let rightConstraint = NSLayoutConstraint(item: self,
                                                  attribute: NSLayoutAttribute.trailing,
                                                  relatedBy: NSLayoutRelation.equal,
                                                  toItem: view,
                                                  attribute: NSLayoutAttribute.trailing,
-                                                 multiplier: 1, constant: 0)
+                                                 multiplier: 1, constant: -self.sideMargins)
+        
+        
+        let heightConstraint = NSLayoutConstraint(item: self,
+                                                  attribute: NSLayoutAttribute.height,
+                                                  relatedBy: self.allowHeightChange ? .greaterThanOrEqual : .equal,
+                                                  toItem: nil,
+                                                  attribute: NSLayoutAttribute.notAnAttribute,
+                                                  multiplier: 1, constant: self.snackBarDefaultHeight)
+        
+        NSLayoutConstraint.activate([leftConstraint, rightConstraint, heightConstraint])
+        
+        view.layoutIfNeeded()
         
         self.bottomConstraint = NSLayoutConstraint(item: self,
                                                    attribute: NSLayoutAttribute.bottom,
                                                    relatedBy: NSLayoutRelation.equal,
                                                    toItem: view,
                                                    attribute: NSLayoutAttribute.bottom,
-                                                   multiplier: 1, constant: self.snackBarHeight)
+                                                   multiplier: 1, constant: self.frame.height)
         self.bottomConstraint.identifier = self.constraintIdentifier
+        NSLayoutConstraint.activate([self.bottomConstraint])
         
-        
-        let heightConstraint = NSLayoutConstraint(item: self,
-                                                  attribute: NSLayoutAttribute.height,
-                                                  relatedBy: NSLayoutRelation.equal,
-                                                  toItem: nil,
-                                                  attribute: NSLayoutAttribute.notAnAttribute,
-                                                  multiplier: 1, constant: self.snackBarHeight)
-
-        NSLayoutConstraint.activate([leftConstraint, rightConstraint, bottomConstraint, heightConstraint])
     }
     
-    func animate(show: Bool, reasonToHide: EndShowingType = .timer, completion: @escaping () -> Void) {
+    
+    /// Animate the SnackBar.
+    ///
+    /// - Parameters:
+    ///   - show: should show or hide the bar
+    ///   - reasonToHide: why the bar will be hidden? timer, over, user..
+    ///   - completion: Function completion to tell when the animation finished
+    private func animate(show: Bool, reasonToHide: EndShowingType = .timer, completion: @escaping () -> Void) {
         
         guard let view = self.showingOnView else {
             return
@@ -153,492 +244,239 @@ class MJSnackBar: UIView, MJSnackBarDelegate {
             
             view.layoutIfNeeded()
             
+            self.layoutIfNeeded()
             // Should show the snack bar
             if show {
-                view.layoutIfNeeded()
-                self.bottomConstraint?.constant = 0
+                
+                
+                self.bottomConstraint?.constant = 0 - self.bottomMargin
+                print("----- show ------\(self.bottomConstraint?.constant)")
                 UIView.animate(withDuration: self.animationDuration, animations: {
                     view.layoutIfNeeded()
                 }, completion: { _ in
-                    
-                    print("View \(self.snackBarID) shown.")
-                    
                     self.isCurrentlyShown = true
-                    self.hide(afterDelay: true, reason: .timer)
-                        completion()
+                    if let data = self.currentlyDisplayedData {
+                        self.delegate?.snackBarAppeared(with: data)
+                    } else {
+                        print("❌ WTF there is no data \(self.snackBarID)")
+                    }
+                    self.hide(afterDelay: true, reason: .timer) { }
+                    completion()
                 })
             } else {
-                    self.bottomConstraint?.constant = self.snackBarHeight
-                    UIView.animate(withDuration: self.animationDuration, animations: {
-                        view.layoutIfNeeded()
-                    }, completion: { _ in
-                        self.isCurrentlyShown = false
-                        // Need to remove constraint after hiding
-                        for constraint in view.constraints {
-                            if constraint.identifier == self.constraintIdentifier {
-                                view.removeConstraint(constraint)
-                            }
-                        }
-                        
-                        self.snackBarDisappeared(withData: self.currentlyDisplayedData!, reason: reasonToHide)
-                        
-                        completion()
-                    })
+                
+                
+                self.bottomConstraint?.constant = self.frame.height
+                print("----- hide ------\(self.bottomConstraint?.constant)")
+                UIView.animate(withDuration: self.animationDuration, animations: {
+                    view.layoutIfNeeded()
+                }, completion: { ok in
+                    
+                    
+                    //self.cleanSnackBar()
+                    
+                    // Need to remove constraint after hiding
+                    //                        for constraint in view.constraints {
+                    //                            if constraint.identifier == self.constraintIdentifier {
+                    //                                view.removeConstraint(constraint)
+                    //                            }
+                    //                        }
+                    
+                    
+
+                    if let data = self.currentlyDisplayedData, self.isCurrentlyShown == true {
+                        self.delegate?.snackBarDisappeared(with: data, reason: reasonToHide)
+                        print("Removving data : \(self.currentlyDisplayedData)")
+                        self.currentlyDisplayedData = nil
+                    }
+                    
+                    self.isCurrentlyShown = false
+                    completion()
+                })
             }
         }
         
     }
     
-    func hide(afterDelay: Bool, reason: EndShowingType) {
+    
+    /// Hide the snack bar and check if it is the correct view displayed.
+    ///
+    /// - Parameters:
+    ///   - afterDelay: Delay to wait before hiding
+    ///   - reason: Why hiding
+    private func hide(afterDelay: Bool, reason: EndShowingType, completion: @escaping () -> Void) {
         
+        let tmpID = self.snackBarID
+        let tmp = self.currentlyDisplayedData
+
         DispatchQueue.global().async {
             
-            let tmp = self.currentlyDisplayedData!
-            let tmpID = self.snackBarID
-    
             if afterDelay {
                 Thread.sleep(forTimeInterval: self.timeSnackBarShown)
             }
-            
-            if tmpID == self.snackBarID && tmp == self.currentlyDisplayedData! {
+        
+            if tmpID == self.snackBarID && self.currentlyDisplayedData != nil && tmp != nil && tmp! == self.currentlyDisplayedData! {
+                print("Je suis passé")
                 self.animate(show: false, reasonToHide: reason) {
-                    print("Hidden \(tmp) - \(reason)")
+                    print("Je vais complete")
+                    completion()
+                }
+                
+            } else {
+                print("Pas passé")
+                completion()
+            }
+        }
+        
+        
+    }
+    
+    func addInformationToSnackBar() {
+        let actionLabel = addActionLabelToSnackBar()
+        addMessageLabelToSnackBar(actionLabel: actionLabel)
+    }
+    
+    func addMessageLabelToSnackBar(actionLabel: UILabel? = nil) {
+        
+        for view in self.subviews {
+            if view.accessibilityIdentifier == "messageLabelSnackBar" {
+                if let messageLabel = view as? UILabel {
+                    messageLabel.textColor = self.messageColor
+                    messageLabel.text = self.currentlyDisplayedData?.message
+                    messageLabel.font = self.messageFont ?? messageLabel.font
+                    self.layoutIfNeeded()
+                    return
                 }
             }
         }
+        
+        let messageLabel = UILabel()
+        
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.accessibilityIdentifier = "messageLabelSnackBar"
+        messageLabel.numberOfLines = 0
+        messageLabel.textColor = self.messageColor
+        messageLabel.text = self.currentlyDisplayedData?.message
+        messageLabel.font = self.messageFont ?? messageLabel.font
+        
+        self.layoutIfNeeded()
+        
+        self.addSubview(messageLabel)
+        
+        // Add constraints
+        let leftConstraint = NSLayoutConstraint(item: messageLabel,
+                                                attribute: NSLayoutAttribute.leading,
+                                                relatedBy: NSLayoutRelation.equal,
+                                                toItem: self,
+                                                attribute: NSLayoutAttribute.leading,
+                                                multiplier: 1,
+                                                constant: self.spaceBetweenElements)
+        
+        let rightConstraint = NSLayoutConstraint(item: messageLabel,
+                                                 attribute: NSLayoutAttribute.trailing,
+                                                 relatedBy: NSLayoutRelation.equal,
+                                                 toItem: actionLabel ?? self,
+                                                 attribute: actionLabel != nil ? .leading : .trailing,
+                                                 multiplier: 1,
+                                                 constant: -self.spaceBetweenElements)
+        
+        let topConstraint = NSLayoutConstraint(item: messageLabel,
+                                               attribute: NSLayoutAttribute.top,
+                                               relatedBy: NSLayoutRelation.equal,
+                                               toItem: self,
+                                               attribute: NSLayoutAttribute.top,
+                                               multiplier: 1,
+                                               constant: self.elementsTopBottomMargins)
+        
+        let bottomConstraint = NSLayoutConstraint(item: messageLabel,
+                                                  attribute: NSLayoutAttribute.bottom,
+                                                  relatedBy: NSLayoutRelation.equal,
+                                                  toItem: self,
+                                                  attribute: NSLayoutAttribute.bottom,
+                                                  multiplier: 1,
+                                                  constant: -self.elementsTopBottomMargins)
+        
+        NSLayoutConstraint.activate([leftConstraint, rightConstraint, bottomConstraint, topConstraint])
     }
     
-    func snackBarDisappeared(withData: MJSnackBar.SnackBarData, reason: EndShowingType) {
-        print("Snack disappeared ouloulou \(withData.message) - \(reason)")
+    func addActionLabelToSnackBar() -> UILabel? {
+        
+        guard let actionString = self.currentlyDisplayedData?.action else {
+            return nil
+        }
+        
+        
+        for view in self.subviews {
+            if view.accessibilityIdentifier == "actionLabelSnackBar" {
+                if let actionLabel = view as? UILabel {
+                    actionLabel.textColor = self.actionColorColor
+                    actionLabel.text = actionString
+                    actionLabel.font = self.actionFont ?? actionLabel.font
+                }
+            }
+        }
+        
+        let actionLabel = UILabel()
+        
+        actionLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        actionLabel.accessibilityIdentifier = "actionLabelSnackBar"
+        actionLabel.numberOfLines = 0
+        actionLabel.textColor = self.actionColorColor
+        actionLabel.text = actionString
+        actionLabel.font = self.actionFont ?? actionLabel.font
+        
+        self.addSubview(actionLabel)
+        
+        // Add constraints
+        let rightConstraint = NSLayoutConstraint(item: actionLabel,
+                                                 attribute: NSLayoutAttribute.trailing,
+                                                 relatedBy: NSLayoutRelation.equal,
+                                                 toItem: self,
+                                                 attribute: NSLayoutAttribute.trailing,
+                                                 multiplier: 1, constant: -self.spaceBetweenElements)
+        
+        let topConstraint = NSLayoutConstraint(item: actionLabel,
+                                               attribute: NSLayoutAttribute.top,
+                                               relatedBy: NSLayoutRelation.equal,
+                                               toItem: self,
+                                               attribute: NSLayoutAttribute.top,
+                                               multiplier: 1, constant: self.elementsTopBottomMargins)
+        
+        let bottomConstraint = NSLayoutConstraint(item: actionLabel,
+                                                  attribute: NSLayoutAttribute.bottom,
+                                                  relatedBy: NSLayoutRelation.equal,
+                                                  toItem: self,
+                                                  attribute: NSLayoutAttribute.bottom,
+                                                  multiplier: 1, constant: -self.elementsTopBottomMargins)
+        
+        NSLayoutConstraint.activate([rightConstraint, bottomConstraint, topConstraint])
+        
+        return actionLabel
     }
     
-    func snackBarAppeared(withData: MJSnackBar.SnackBarData) {
-        print("Snackbar appeared \(withData.message)")
+    func cleanSnackBar() {
+        
+        //        for view in self.subviews {
+        //            view.removeFromSuperview()
+        //        }
+        //        self.removeFromSuperview()
+        print("J'ai tout clean voilàààà")
     }
     
-//    func checkIfQueueIsEmpty() {
-//        if let otherBar = self.dataToDisplay.first {
-//            self.createSnackBar()
-//            self.animate(show: true)
-//        }
-//    }
+    func snackBarTouched() {
+        
+        self.hide(afterDelay: false, reason: .user) { }
+        
+        if let data = self.currentlyDisplayedData {
+            self.delegate?.snackBarActionTriggered(with: data)
+        }
+    }
     
 }
 
-//open class MJSnackBar {
-//
-//	/**
-//	All views used to build the SnackBar
-//	*/
-//	 var snackBarView: UIView!
-//	 var snackBarActionText: UILabel?
-//	 var snackBarLeftActionText: UILabel!
-//
-//	/**
-//	Properties to build the main view frame
-//	*/
-//	 var spaceOnSide: Double = 5.0
-//	 var spaceOnBottom: Double = 5.0
-//	 var snackViewHeight: Double = 50.0
-//	 var backgroundColor: Int = 0x1D1D1D
-//	 var backgroundAlpha: CGFloat = 0.8
-//	 var corners: CGFloat = 3.0
-//	 var androidValues: Bool = false
-//	 var minimumHeight: Double = -1
-//
-//	/**
-//	Set all times used for SnackBar
-//	*/
-//	 var appearanceDuration: Double = 4.0
-//	 var animationTime: Double = 0.3
-//
-//	/**
-//	Properties to build the LeftAction label
-//	*/
-//	 var leftActionText: String!
-//	 var leftActionTextSize: CGFloat = 14.0
-//	 var leftActionTextColor: Int = 0xFFFFFF
-//
-//	/**
-//	Properties to build the ActionButton button
-//	*/
-//	 var actionButtonTextSize: CGFloat = 14.0
-//	 var actionButtonText: NSString = NSLocalizedString("Undo", comment: "") as NSString
-//	 var actionButtonTextColorNormal: Int = 0xFFFFFF
-//	 var actionButtonTextColorSelected: Int = 0xDDDDDD
-//	 var snackBarItemsSideSize: CGFloat = 10.0
-//
-//	/**
-//	Property to get the size of the current screen
-//	*/
-//	 var screenSize: CGRect!
-//
-//	/**
-//	Property to get if the view is shown or is showing
-//	*/
-//	 var shown: Bool!
-//	 var animating: Bool!
-//
-//	/**
-//	Enum to know why SnackBar disappeared : due to Timer or User action
-//	*/
-//	public enum EndShowingType {
-//		case timer, user
-//	}
-//
-//	public enum SnackType {
-//		case `default`, android
-//	}
-//
-//	var completionMethod: ((EndShowingType)->())? = nil
-//	var snackID = 0
-//
-//	public init() {
-//		screenSize = UIScreen.main.bounds
-//		shown = false
-//		animating = false
-//		createView()
-//		NotificationCenter.default.addObserver(self, selector: #selector(MJSnackBar.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-//	}
-//
-////	/**
-////	Init with custom data
-////	*/
-////	public init(custom: Dictionary<String, Any>) {
-////
-////		if let spaceOnSide = custom["spaceOnSide"] { spaceOnSide = spaceOnSide as! Double }
-////		if let spaceOnBottom = custom["spaceOnBottom"] { spaceOnBottom = spaceOnBottom as! Double }
-////		if let snackViewHeight = custom["snackViewHeight"] { snackViewHeight = snackViewHeight as! Double }
-////		if let backgroundColor = custom["backgroundColor"] { backgroundColor = backgroundColor as! Int }
-////		if let backgroundAlpha = custom["backgroundAlpha"] { backgroundAlpha = backgroundAlpha as! CGFloat }
-////		if let appearanceDuration = custom["appearanceDuration"] { appearanceDuration = appearanceDuration as! Double }
-////		if let animationTime = custom["animationTime"] { animationTime = animationTime as! Double }
-////		if let leftActionTextColor = custom["leftActionTextColor"] { leftActionTextColor = leftActionTextColor as! Int }
-////		if let actionButtonText = custom["actionButtonText"] {	actionButtonText = actionButtonText as! String as NSString }
-////		if let actionButtonTextColorNormal = custom["actionButtonTextColorNormal"] { actionButtonTextColorNormal = actionButtonTextColorNormal as! Int }
-////		if let actionButtonTextColorSelected = custom["actionButtonTextColorSelected"] { actionButtonTextColorSelected = actionButtonTextColorSelected as! Int }
-////
-////		screenSize = UIScreen.main.bounds
-////		shown = false
-////		animating = false
-////		createView()
-////		NotificationCenter.default.addObserver(self, selector: #selector(MJSnackBar.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-////
-////	}
-//
-//	public init(type: SnackType) {
-//
-//		switch type {
-//		case .android:
-//			androidValues = true
-//			officialSnack()
-//			break
-//		default:
-//			break
-//		}
-//
-//		screenSize = UIScreen.main.bounds
-//		shown = false
-//		animating = false
-//		createView()
-//		NotificationCenter.default.addObserver(self, selector: #selector(MJSnackBar.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-//	}
-//
-//
-////	open func addCustomStyle( custom: Dictionary<String, Any>) {
-////		if let spaceOnSide = custom["spaceOnSide"] { spaceOnSide = spaceOnSide as! Double }
-////		if let spaceOnBottom = custom["spaceOnBottom"] { spaceOnBottom = spaceOnBottom as! Double }
-////		if let snackViewHeight = custom["snackViewHeight"] { snackViewHeight = snackViewHeight as! Double }
-////		if let backgroundColor = custom["backgroundColor"] { backgroundColor = backgroundColor as! Int }
-////		if let backgroundAlpha = custom["backgroundAlpha"] { backgroundAlpha = backgroundAlpha as! CGFloat }
-////		if let appearanceDuration = custom["appearanceDuration"] { appearanceDuration = appearanceDuration as! Double }
-////		if let animationTime = custom["animationTime"] { animationTime = animationTime as! Double }
-////		if let leftActionTextColor = custom["leftActionTextColor"] { leftActionTextColor = leftActionTextColor as! Int }
-////		if let actionButtonText = custom["actionButtonText"] {	actionButtonText = actionButtonText as! String as NSString }
-////		if let actionButtonTextColorNormal = custom["actionButtonTextColorNormal"] { actionButtonTextColorNormal = actionButtonTextColorNormal as! Int }
-////		if let actionButtonTextColorSelected = custom["actionButtonTextColorSelected"] { actionButtonTextColorSelected = actionButtonTextColorSelected as! Int }
-////	}
-//
-//	/*!
-//	Creates a SnackBar with the same style as Google one
-//	*/
-//	 func officialSnack() {
-//		spaceOnSide = 0.0
-//		spaceOnBottom = 0.0
-//		corners = 0
-//		minimumHeight = 48
-//		backgroundColor = 0x323232
-//		backgroundAlpha = 1
-//		actionButtonTextColorNormal = 0xFF0000
-//		actionButtonTextColorSelected = 0x00FF00
-//
-//		self.changePropertiesIfIPad()
-//	}
-//
-//	 func changePropertiesIfIPad() {
-//
-//		let orientation = UIApplication.shared.statusBarOrientation
-//
-//		if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad {
-//			let screenWidth: CGFloat = UIScreen.main.bounds.width
-//
-//			if orientation.isLandscape {
-//				let restSpace = screenWidth - 568
-//				spaceOnSide = Double(restSpace) / 2
-//			}
-//
-//
-//		}
-//
-//	}
-//
-//	/**
-//	Creates the SnackBar main view with all properties
-//	*/
-//	 func createView() {
-//
-//		self.screenSize = UIScreen.main.bounds
-//
-//		snackBarView = UIView(frame: CGRect(x: spaceOnSide,
-//			y: Double(screenSize.height) + 1,
-//			width: Double(screenSize.width) - (spaceOnSide * 2),
-//			height: snackViewHeight))
-//
-//		snackBarView.backgroundColor = UIColor.init(netHex: backgroundColor)
-//		snackBarView.backgroundColor = snackBarView.backgroundColor?.withAlphaComponent(backgroundAlpha)
-//
-//		snackBarView.layer.cornerRadius = corners
-//		snackBarView.layer.masksToBounds = true
-//	}
-//
-//
-//	 func addActionButton() {
-//
-//		let textSize = actionButtonText.size(attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: actionButtonTextSize)])
-//
-//		snackBarActionText = UILabel(frame: CGRect(x: (snackBarView.frame.width - textSize.width) - snackBarItemsSideSize,
-//			y: (snackBarView.frame.height / 2) - (textSize.height / 2),
-//			width: textSize.width + 3,
-//			height: textSize.height))
-//
-//		snackBarActionText?.text = actionButtonText as String
-//		snackBarActionText?.textColor = UIColor.init(netHex:actionButtonTextColorNormal)
-//
-//		snackBarActionText?.font = UIFont.boldSystemFont(ofSize: actionButtonTextSize)
-//
-//		snackBarActionText?.textAlignment = .right
-//
-//		snackBarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapOnViewHandler)))
-//
-//		snackBarView.addSubview(snackBarActionText!)
-//	}
-//
-//	/**
-//	Create and add the left action text
-//	*/
-//	 func addActionText( message: String) {
-//
-//		let textSize = (message as NSString).size(attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: leftActionTextSize)])
-//
-//		var textWidth: CGFloat = textSize.width + 3
-//
-//		if (screenSize.width - textWidth - CGFloat(snackBarItemsSideSize * 2) - (snackBarActionText?.frame.width)! < 0) {
-//			textWidth = screenSize.width - (snackBarActionText?.frame.width)! - CGFloat(snackBarItemsSideSize * 2) - 10
-//		}
-//
-//		snackBarLeftActionText = UILabel(frame: CGRect(x: snackBarItemsSideSize,
-//			y: (snackBarView.frame.height / 2) - (textSize.height / 2),
-//			width: textWidth,
-//			height: textSize.height))
-//
-//		let hght = snackBarActionText?.frame.size
-//
-//		snackBarLeftActionText.lineBreakMode = .byWordWrapping
-//		snackBarLeftActionText.numberOfLines = 0
-//		snackBarLeftActionText.text = message
-//		snackBarLeftActionText.textColor = UIColor.init(netHex: leftActionTextColor)
-//		snackBarLeftActionText.font = UIFont.systemFont(ofSize: leftActionTextSize)
-//
-//		snackBarLeftActionText?.frame = CGRect(x: (snackBarLeftActionText?.frame.origin.x)!, y: (snackBarLeftActionText?.frame.origin.y)!, width: (snackBarLeftActionText?.frame.size.width)!, height: (snackBarLeftActionText?.requiredHeight())!)
-//
-//
-//		let neededLinesForLabel = snackBarLeftActionText.frame.height / textSize.height
-//
-//		let nf = snackBarLeftActionText?.frame.size
-//		let h = snackBarLeftActionText?.requiredHeight()
-//
-//		var snHeight: CGFloat
-//
-//		if (androidValues == true) {
-//
-//			if (neededLinesForLabel < 2) {
-//				snHeight = 28 + snackBarLeftActionText.frame.size.height
-//			} else {
-//				snHeight = 48 + snackBarLeftActionText.frame.size.height
-//			}
-//		} else {
-//			snHeight = snackBarItemsSideSize + snackBarLeftActionText.frame.size.height
-//		}
-//
-//		if (self.minimumHeight > -1 && Double(snHeight) < self.minimumHeight) {
-//			snHeight = CGFloat(self.minimumHeight)
-//		}
-//
-//		let positionY = CGFloat(screenSize.height) - CGFloat(snHeight)
-//
-//		snackBarView?.frame = CGRect(x: (snackBarView?.frame.origin.x)!, y: CGFloat(screenSize.height) + 1, width: (snackBarView?.frame.size.width)!,
-//		                                  height: snHeight)
-//
-//		snackViewHeight = Double(snHeight)
-//		snackBarView.addSubview(snackBarLeftActionText!)
-//	}
-//
-//	 func adjustViews() {
-//
-//		let snackMiddle = snackBarView.frame.height / 2
-//
-//		//		snackBarView = UIView(frame: CGRect(x: Double(snackBarView.frame.origin.x),
-//		//			y: Double(snackBarView.frame.origin.y),
-//		//			width: Double(screenSize.width) - (spaceOnSide * 2),
-//		//			height: snackViewHeight))
-//
-//
-//		snackBarActionText?.frame = CGRect(x: (snackBarActionText?.frame.origin.x)!, y: (snackMiddle - CGFloat((snackBarActionText?.frame.height)!) / 2), width: (snackBarActionText?.frame.size.width)!, height: (snackBarActionText?.frame.height)!)
-//
-//		snackBarLeftActionText?.frame = CGRect(x: (snackBarLeftActionText?.frame.origin.x)!, y: (snackMiddle - CGFloat((snackBarLeftActionText?.frame.height)!) / 2), width: (snackBarLeftActionText?.frame.size.width)!, height: (snackBarLeftActionText?.frame.height)!)
-//
-//	}
-//
-//	/**
-//	Show the SnackBar on view passed on parameter
-//	*/
-//	open func show(onView: UIView, message: String, completion: @escaping (MJSnackBar.EndShowingType)->()) {
-//
-//		if (animating == true) {
-//			return
-//		}
-//
-//		snackID += 1
-//		completionMethod = completion
-//		if (shown == true) {
-//			hideSnackView() {
-//				self.showSnackView(onView: onView, message: message) {
-//					completion(EndShowingType.user)
-//				}
-//			}
-//		} else {
-//			self.showSnackView(onView: onView, message: message) {
-//				completion(EndShowingType.timer)
-//			}
-//		}
-//
-//	}
-//
-//	 func showSnackView(onView: UIView, message: String, completion: @escaping ()->()) {
-//		animating = true
-//
-//		createView()
-//		addActionButton()
-//		addActionText(message: message)
-//		adjustViews()
-//
-//		onView.addSubview(snackBarView)
-//
-//		UIView.animate(withDuration: animationTime, animations: { _  in
-//
-//			self.snackBarView.frame = CGRect(x: self.spaceOnSide,
-//				y: Double(self.screenSize.height) - (self.spaceOnBottom + self.snackViewHeight),
-//				width: Double(self.screenSize.width) - (self.spaceOnSide * 2),
-//				height: self.snackViewHeight)
-//
-//			}, completion: { _  in
-//				self.animating = false
-//				self.shown = true
-//				DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
-//					let tmp = self.snackID
-//					Thread.sleep(forTimeInterval: TimeInterval(self.appearanceDuration))
-//					if (tmp != self.snackID) { return }
-//					DispatchQueue.main.async(execute: {
-//						if (self.shown == true) {
-//							self.hideSnackView() {
-//								completion()
-//							}
-//						}
-//					})
-//				})
-//		})
-//
-//	}
-//
-//	/*!
-//	Dismiss the SnackbarView
-//	*/
-//	open func dismiss() {
-//
-//		hideSnackView() {
-//			if (self.completionMethod != nil) {
-//				self.completionMethod!(EndShowingType.user)
-//			}
-//		}
-//	}
-//
-//	 func hideSnackView( completion: @escaping () -> ()) {
-//		if (shown == false || animating == true) {
-//			return
-//		}
-//		animating = true
-//		UIView.animate(withDuration: animationTime, animations: { _ in
-//
-//			self.snackBarView.frame = CGRect(x: Double(self.snackBarView.frame.origin.x),
-//				y: Double(self.screenSize.height) + 1,
-//				width: Double(self.snackBarView.frame.width),
-//				height: self.snackViewHeight)
-//
-//			}, completion: { _ in
-//
-//				self.snackBarLeftActionText.removeFromSuperview()
-//				self.snackBarView.removeFromSuperview()
-//				//if (self.snackBarActionText != nil) {
-//				self.snackBarActionText?.removeFromSuperview()
-//				//}
-//				self.animating = false
-//				self.shown = false
-//				completion()
-//		})
-//	}
-//
-//	/*!
-//	Triggered when the user tap on the view
-//	- parameter sender:	view
-//	*/
-//	@objc func tapOnViewHandler( sender: AnyObject) {
-//		dismiss()
-//	}
-//
-//	@objc func rotated() {
-//
-//		self.hideSnackView {
-//			if (self.completionMethod != nil) {
-//				self.completionMethod!(EndShowingType.timer)
-//			}
-//		}
-//		self.screenSize = UIScreen.main.bounds
-//	}
-//
-//}
-//
-//extension UILabel {
-//
-//	func requiredHeight() -> CGFloat {
-//
-//		let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: CGFloat.greatestFiniteMagnitude))
-//		label.numberOfLines = 0
-//		label.lineBreakMode = NSLineBreakMode.byWordWrapping
-//		label.font = self.font
-//		label.text = self.text
-//		
-//		label.sizeToFit()
-//		
-//		return label.frame.height
-//	}
-//}
+//Il ny en a pas Deleted : 1
+//----- show ------
+//Snackbar appeared Deleted : 1
+//C'est cet IDDDD 1 avec 1
+//----- hide ------

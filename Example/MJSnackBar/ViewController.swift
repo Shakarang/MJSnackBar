@@ -11,13 +11,11 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	
+    @IBOutlet weak var examplTableView: UITableView!
+
 	var snackbar: MJSnackBar!
 	
-	var dataArray = [
-		"Walking the dog",
-		"Take a shower",
-		"Clean house"
-	]
+    var dataArray: [String]!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -28,14 +26,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		// snackbar = MJSnackBar(custom: customSnackBar)
 		//snackbar = MJSnackBar(type: MJSnackBar.SnackType.android)
         
+        
+//        self.dataArray = [
+//            "Walking the dog",
+//            "Take a shower",
+//            "Clean house",
+//        ]
+        self.dataArray = [
+            "1","2","3","4","5","6","7","8","9","10","11","12",
+        ]
+        
+        
+        
         snackbar = MJSnackBar(onView: self.view)
+        snackbar.delegate = self
+        snackbar.layer.masksToBounds = true
+        snackbar.layer.cornerRadius = 3.0
+        snackbar.sideMargins = 5.0
+        snackbar.bottomMargin = 5.0
+        snackbar.backgroundColor = UIColor.blue.withAlphaComponent(0.7)
         
 		//snackbar.addCustomStyle(customSnackBar)
-	}
-	
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
 	}
 	
 	func numberOfSections(in tableView: UITableView) -> Int {
@@ -59,30 +70,50 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-		if editingStyle == UITableViewCellEditingStyle.delete {
-			let savedString = dataArray[indexPath.row]
-			let savedPos = indexPath
-			dataArray.remove(at: indexPath.row)
-			tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-			
-			var msg = savedString
+		
+        if editingStyle == UITableViewCellEditingStyle.delete {
+
+			let msg = "Deleted : \(dataArray[indexPath.row])"
             
-            let data = MJSnackBar.SnackBarData(id: indexPath.row, message: msg, action: nil)
+            
+            
+            let data = MJSnackBarData(id: indexPath.row, message: msg, originalObject: dataArray[indexPath.row])
             
             snackbar.show(data: data, onView: self.view)
             
-
-//			snackbar.show(onView: self.view, message: msg + savedString, completion: {reason in
-//				// Handle the way the view disappeared nicely
-//				if reason == MJSnackBar.EndShowingType.user {
-//					self.dataArray.insert(savedString, at: savedPos.row)
-//					tableView.insertRows(at: [savedPos], with: UITableViewRowAnimation.automatic)
-//				}
-//			})
+            dataArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
 		}
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 	}
+}
+
+extension ViewController: MJSnackBarDelegate {
+    
+    func snackBarDisappeared(with data: MJSnackBarData, reason: MJSnackBar.EndShowingType) {
+        print("👻 Snack disappeared \(data.message) - \(reason)")
+    }
+    
+    func snackBarAppeared(with data: MJSnackBarData) {
+        print("👍 Snackbar appeared \(data.message)")
+    }
+    
+    func snackBarActionTriggered(with data: MJSnackBarData) {
+        
+        print("User pressed !!!")
+        
+        if let id = data.id {
+            
+            let indexPath = IndexPath(row: id, section: 0)
+            
+            if let originalData = data.originalObject as? String {
+                self.dataArray.insert(originalData, at: id)
+            }
+            
+            self.examplTableView.insertRows(at: [indexPath], with: .automatic)
+        }
+    }
 }
