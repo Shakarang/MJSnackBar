@@ -21,10 +21,10 @@ struct MJSnackBarData {
     /// Object linked to the data displayed. Only there to help you retrieving it easily.
     var originalObject: Any? = nil
     
-    init(id: Int? = nil,
+    init(withIdentifier id: Int? = nil,
          message: String,
-         action: String? = nil,
-         originalObject: Any? = nil) {
+         andActionMessage action: String? = nil,
+         objectSaved originalObject: Any? = nil) {
         self.id = id
         self.message = message
         self.action = action

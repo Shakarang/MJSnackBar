@@ -9,86 +9,75 @@
 import UIKit
 //import MJSnackBar
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-	
+class ViewController: UIViewController {
+    
     @IBOutlet weak var examplTableView: UITableView!
-
-	var snackbar: MJSnackBar!
-	
+    
+    var snackbar: MJSnackBar!
+    
     var dataArray: [String]!
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
-		
-		self.edgesForExtendedLayout = UIRectEdge()
-		
-		// snackbar = MJSnackBar(custom: customSnackBar)
-		//snackbar = MJSnackBar(type: MJSnackBar.SnackType.android)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        self.edgesForExtendedLayout = UIRectEdge()
         
-//        self.dataArray = [
-//            "Walking the dog",
-//            "Take a shower",
-//            "Clean house",
-//        ]
         self.dataArray = [
-            "1","2","3","4","5","6","7","8","9","10","11","12",
+            "Walk the dog",
+            "Take a shower",
+            "Clean house",
+            "Shopping"
         ]
-        
-        
         
         snackbar = MJSnackBar(onView: self.view)
         snackbar.delegate = self
-        snackbar.layer.masksToBounds = true
-        snackbar.layer.cornerRadius = 3.0
-        snackbar.sideMargins = 5.0
-        snackbar.bottomMargin = 5.0
-        snackbar.backgroundColor = UIColor.blue.withAlphaComponent(0.7)
-        
-		//snackbar.addCustomStyle(customSnackBar)
-	}
-	
-	func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
-	}
-	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return dataArray.count
-	}
-	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = UITableViewCell()
-		
-		cell.textLabel?.text = dataArray[indexPath.row]
-		
-		return cell
-	}
-	
-	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		return true
-	}
-	
-	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-		
-        if editingStyle == UITableViewCellEditingStyle.delete {
+    }
+}
 
-			let msg = "Deleted : \(dataArray[indexPath.row])"
+extension ViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        
+        cell.textLabel?.text = dataArray[indexPath.row]
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == UITableViewCellEditingStyle.delete {
             
+            let msg = "Deleted : \(dataArray[indexPath.row])"
             
-            
-            let data = MJSnackBarData(id: indexPath.row, message: msg, originalObject: dataArray[indexPath.row])
+            let data = MJSnackBarData(withIdentifier: indexPath.row, message: msg, andActionMessage: "UNDO", objectSaved: dataArray[indexPath.row])
             
             snackbar.show(data: data, onView: self.view)
             
             dataArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-		}
-	}
-	
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
-	}
+        }
+    }
+    
+}
+
+extension ViewController: UITableViewDelegate {
+    
+   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension ViewController: MJSnackBarDelegate {
@@ -102,8 +91,6 @@ extension ViewController: MJSnackBarDelegate {
     }
     
     func snackBarActionTriggered(with data: MJSnackBarData) {
-        
-        print("User pressed !!!")
         
         if let id = data.id {
             

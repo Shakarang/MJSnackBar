@@ -15,7 +15,7 @@ class MJSnackBar: UIView {
     /// - timer: The timer ended, normal behaviour
     /// - user: The user pressed the undo button. You have to handle it
     public enum EndShowingType {
-        case timer, overriden, user
+        case timer, overridden, user
     }
     
     /// Delegate to let user create its own actions
@@ -85,7 +85,7 @@ class MJSnackBar: UIView {
         
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
 
-        self.backgroundColor = UIColor(red:0.11, green:0.11, blue:0.11, alpha:0.8)
+        self.backgroundColor = UIColor(red:0.11, green:0.11, blue:0.11, alpha:0.95)
         self.showingOnView = onView
         
         // Allow user to interract with the bar
@@ -116,7 +116,7 @@ class MJSnackBar: UIView {
     ///   - view: where to show the snackbar
     public func show(data: MJSnackBarData, onView view: UIView) {
         if self.isCurrentlyShown {
-                self.animate(show: false, reasonToHide: .over) {
+                self.animate(show: false, reasonToHide: .overridden) {
                 self.currentlyDisplayedData = data
                 DispatchQueue.main.async {
                     self.snackBarID += 1
