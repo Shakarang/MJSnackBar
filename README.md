@@ -72,6 +72,11 @@ To help you handle the different events, the ```MJSnackBarData``` comes with mul
 To be able to handle the different events, you have to implement 3 methods which come with the ```MJSnackBarDelegate```.
 They let you know when a MJSnackBar is displayed, hidden, or if a user performed an action on it.
 
+To tell the bar that your class can handle its events :
+```swift
+  snackbar.delegate = self
+```
+
 ```swift
 
 extension ViewController: MJSnackBarDelegate {
