@@ -58,10 +58,6 @@ class MJSnackBar: UIView {
     /// Action text color
     public var actionColorColor: UIColor = .red
     
-    /*
-    ** PRIVATE
-    */
-    
     /// Current view the bar is shown on
     fileprivate var showingOnView: UIView? = nil
     
@@ -149,7 +145,6 @@ class MJSnackBar: UIView {
     }
 }
 
-
 // MARK: - SnackBar information management
 extension MJSnackBar {
     
@@ -213,7 +208,6 @@ extension MJSnackBar {
         
     }
     
-    
     /// Add the action message on the left of the view
     /// If an actionLabel is passed, creates constraint between the two.
     /// Otherwise, creates constraint to trailing view
@@ -273,7 +267,6 @@ extension MJSnackBar {
         NSLayoutConstraint.activate([leftConstraint, rightConstraint, bottomConstraint, topConstraint])
     }
     
-    
     /// Add the action message on the right of the view
     ///
     /// - Returns: action label if created. Used to create constraints between action and message
@@ -332,7 +325,6 @@ extension MJSnackBar {
         return actionLabel
     }
 }
-
 
 // MARK: - SnackBar animations
 extension MJSnackBar {
@@ -405,5 +397,4 @@ extension MJSnackBar {
             }
         }
     }
-    
 }
