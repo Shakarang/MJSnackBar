@@ -48,6 +48,44 @@ When instantiating the MJSnackBar, you have to pass, as a parameter, the view it
 It is a UIView subclass, so you are free to change the same properties like the ```backgroundColor```, etc..
 
 However, there are some MJSnackBar properties that you can modify.
+```Swift
+    /// Animation duration
+    public var animationDuration: Double = 0.4
+
+    /// How long the SnackBar will be shown
+    public var timeSnackBarShown: Double = 2.0
+
+    /// SnackBar height
+    public var snackBarDefaultHeight: CGFloat = 48.0
+
+    /// Allow the SnackBar height to automatically adjust
+    /// its height based on the content
+    public var allowHeightChange: Bool = true
+
+    /// SnackBar margins
+    public var spaceBetweenElements: CGFloat = 24.0
+
+    /// SnackBar side margins to view
+    public var sideMargins: CGFloat = 0.0
+
+    /// SnackBar bottom margin to view
+    public var bottomMargin: CGFloat = 0.0
+
+    /// SnackBar internal content margin
+    public var elementsTopBottomMargins: CGFloat = 14.0
+
+    /// Font of displayed message
+    public var messageFont: UIFont? = nil
+
+    /// Font of action button
+    public var actionFont: UIFont? = UIFont.boldSystemFont(ofSize: UIFont.labelFontSize)
+
+    /// Message text color
+    public var messageColor: UIColor = .white
+
+    /// Action text color
+    public var actionColorColor: UIColor = .red
+```
 
 #### Data :
 
