@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		794913151E3634C20029A218 /* MJSnackBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 794913141E3634B80029A218 /* MJSnackBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		797434771E361F7400FCCFD4 /* Source in Resources */ = {isa = PBXBuildFile; fileRef = 79DDFE461D5B8BC200A2CE20 /* Source */; };
-		797434791E361FE400FCCFD4 /* MJSnackBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 797434781E361FE400FCCFD4 /* MJSnackBar.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		794913141E3634B80029A218 /* MJSnackBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MJSnackBar.h; path = Source/MJSnackBar.h; sourceTree = "<group>"; };
 		797119521D5A0849009D1D5E /* MJSnackBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MJSnackBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		797434781E361FE400FCCFD4 /* MJSnackBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MJSnackBar.h; path = Source/MJSnackBar.h; sourceTree = "<group>"; };
 		79DDFE461D5B8BC200A2CE20 /* Source */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Source; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -31,7 +31,7 @@
 		797119481D5A0849009D1D5E = {
 			isa = PBXGroup;
 			children = (
-				797434781E361FE400FCCFD4 /* MJSnackBar.h */,
+				794913141E3634B80029A218 /* MJSnackBar.h */,
 				79DDFE461D5B8BC200A2CE20 /* Source */,
 				797119531D5A0849009D1D5E /* Products */,
 			);
@@ -52,7 +52,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				797434791E361FE400FCCFD4 /* MJSnackBar.h in Headers */,
+				794913151E3634C20029A218 /* MJSnackBar.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

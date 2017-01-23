@@ -7,7 +7,7 @@
 //
 
 /// Data to fill the MJSnackBar
-struct MJSnackBarData {
+public struct MJSnackBarData {
     
     /// Message you want to display to the user
     var message: String

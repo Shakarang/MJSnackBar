@@ -6,7 +6,7 @@
 //  Copyright © 2017 Shakarang. All rights reserved.
 //
 
-protocol MJSnackBarDelegate: class {
+public protocol MJSnackBarDelegate: class {
     
     /// Action triggered when the SnackBar is shown on the view.
     ///

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MJSnackBar: UIView {
+open class MJSnackBar: UIView {
     
     /// Enum to know why SnackBar disappeared : due to Timer or User action
     ///
@@ -94,7 +94,7 @@ class MJSnackBar: UIView {
         
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
