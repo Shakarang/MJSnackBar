@@ -63,23 +63,23 @@ class MJSnackBar: UIView {
     */
     
     /// Current view the bar is shown on
-    private var showingOnView: UIView? = nil
+    fileprivate var showingOnView: UIView? = nil
     
     /// SnackBar bottom constraint
-    private var bottomConstraint: NSLayoutConstraint!
+    fileprivate var bottomConstraint: NSLayoutConstraint!
     
     /// Constraint identifier. Used to track it
-    private var constraintIdentifier = "snackBarConstraintBottom"
+    fileprivate var constraintIdentifier = "snackBarConstraintBottom"
     
     /// Used to know if there is a SnackBar displaying
-    private var isCurrentlyShown = false
+    fileprivate var isCurrentlyShown = false
     
     /// Used to know the number of SnackBar displayed.
     /// Also used for removing the view.
-    private var snackBarID = 0
+    fileprivate var snackBarID = 0
     
     /// Data displayed
-    private var currentlyDisplayedData: MJSnackBarData? = nil
+    fileprivate var currentlyDisplayedData: MJSnackBarData? = nil
 
     public init(onView: UIView) {
         
@@ -95,6 +95,7 @@ class MJSnackBar: UIView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.snackBarTouched))
         tapGesture.numberOfTapsRequired = 1
         self.addGestureRecognizer(tapGesture)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -134,8 +135,25 @@ class MJSnackBar: UIView {
         }
     }
     
+    /// Triggered when the user touches the SnackBar
+    /// Calls snackBarActionTriggered of the delegate if there is one
+    @objc fileprivate func snackBarTouched() {
+        
+        self.hide(afterDelay: false, reason: .user) { }
+        
+        if let data = self.currentlyDisplayedData {
+            self.delegate?.snackBarActionTriggered(with: data)
+        }
+
+    }
+}
+
+
+// MARK: - SnackBar information management
+extension MJSnackBar {
+    
     /// Create SnackBar with all data needed and add it to the view.
-    private func createSnackBar() {
+    fileprivate func createSnackBar() {
         
         guard let view = self.showingOnView else {
             return
@@ -182,83 +200,24 @@ class MJSnackBar: UIView {
                                                    multiplier: 1, constant: self.frame.height)
         self.bottomConstraint.identifier = self.constraintIdentifier
         NSLayoutConstraint.activate([self.bottomConstraint])
-    }
-    
-    /// Animate the SnackBar.
-    ///
-    /// - Parameters:
-    ///   - show: should show or hide the bar
-    ///   - reasonToHide: why the bar will be hidden? timer, over, user..
-    ///   - completion: Function completion to tell when the animation finished
-    private func animate(show: Bool, reasonToHide: EndShowingType = .timer, completion: @escaping () -> Void) {
-        
-        guard let view = self.showingOnView else {
-            return
-        }
-        
-        DispatchQueue.main.async {
-            view.layoutIfNeeded()
-            self.layoutIfNeeded()
-            // Should show the snack bar
-            if show {
-                self.bottomConstraint?.constant = 0 - self.bottomMargin
-                UIView.animate(withDuration: self.animationDuration, animations: {
-                    view.layoutIfNeeded()
-                }, completion: { _ in
-                    self.isCurrentlyShown = true
-                    if let data = self.currentlyDisplayedData {
-                        self.delegate?.snackBarAppeared(with: data)
-                    }
-                    self.hide(afterDelay: true, reason: .timer) { }
-                    completion()
-                })
-            } else {
-                self.bottomConstraint?.constant = self.frame.height
-                UIView.animate(withDuration: self.animationDuration, animations: {
-                    view.layoutIfNeeded()
-                }, completion: { _ in
-                    if let data = self.currentlyDisplayedData, self.isCurrentlyShown == true {
-                        self.delegate?.snackBarDisappeared(with: data, reason: reasonToHide)
-                        self.currentlyDisplayedData = nil
-                    }
-                    self.isCurrentlyShown = false
-                    completion()
-                })
-            }
-        }
-        
-    }
-    
-    /// Hide the snack bar and check if it is the correct view displayed.
-    ///
-    /// - Parameters:
-    ///   - afterDelay: Delay to wait before hiding
-    ///   - reason: Why hiding
-    private func hide(afterDelay: Bool, reason: EndShowingType, completion: @escaping () -> Void) {
-        
-        let tmpID = self.snackBarID
-        let tmp = self.currentlyDisplayedData
 
-        DispatchQueue.global().async {
-            if afterDelay {
-                Thread.sleep(forTimeInterval: self.timeSnackBarShown)
-            }
-            if tmpID == self.snackBarID && self.currentlyDisplayedData != nil && tmp != nil && tmp! == self.currentlyDisplayedData! {
-                self.animate(show: false, reasonToHide: reason) {
-                    completion()
-                }
-            } else {
-                completion()
-            }
-        }
     }
     
-    func addInformationToSnackBar() {
+    /// Add all information to the SnackBar
+    fileprivate func addInformationToSnackBar() {
+        
         let actionLabel = addActionLabelToSnackBar()
+        
         addMessageLabelToSnackBar(actionLabel: actionLabel)
+        
     }
     
-    func addMessageLabelToSnackBar(actionLabel: UILabel? = nil) {
+    
+    /// Add the action message on the left of the view
+    /// If an actionLabel is passed, creates constraint between the two.
+    /// Otherwise, creates constraint to trailing view
+    /// - Parameter actionLabel: Action message to create a constraint with
+    fileprivate func addMessageLabelToSnackBar(actionLabel: UILabel? = nil) {
         
         for view in self.subviews {
             if view.accessibilityIdentifier == "messageLabelSnackBar" {
@@ -313,7 +272,11 @@ class MJSnackBar: UIView {
         NSLayoutConstraint.activate([leftConstraint, rightConstraint, bottomConstraint, topConstraint])
     }
     
-    func addActionLabelToSnackBar() -> UILabel? {
+    
+    /// Add the action message on the right of the view
+    ///
+    /// - Returns: action label if created. Used to create constraints between action and message
+    fileprivate func addActionLabelToSnackBar() -> UILabel? {
         
         guard let actionString = self.currentlyDisplayedData?.action else {
             return nil
@@ -367,13 +330,79 @@ class MJSnackBar: UIView {
         
         return actionLabel
     }
+}
+
+
+// MARK: - SnackBar animations
+extension MJSnackBar {
     
-    func snackBarTouched() {
+    /// Animate the SnackBar.
+    ///
+    /// - Parameters:
+    ///   - show: should show or hide the bar
+    ///   - reasonToHide: why the bar will be hidden? timer, over, user..
+    ///   - completion: Function completion to tell when the animation finished
+    fileprivate func animate(show: Bool, reasonToHide: EndShowingType = .timer, completion: @escaping () -> Void) {
         
-        self.hide(afterDelay: false, reason: .user) { }
+        guard let view = self.showingOnView else {
+            return
+        }
         
-        if let data = self.currentlyDisplayedData {
-            self.delegate?.snackBarActionTriggered(with: data)
+        DispatchQueue.main.async {
+            view.layoutIfNeeded()
+            self.layoutIfNeeded()
+            // Should show the snack bar
+            if show {
+                self.bottomConstraint?.constant = 0 - self.bottomMargin
+                UIView.animate(withDuration: self.animationDuration, animations: {
+                    view.layoutIfNeeded()
+                }, completion: { _ in
+                    self.isCurrentlyShown = true
+                    if let data = self.currentlyDisplayedData {
+                        self.delegate?.snackBarAppeared(with: data)
+                    }
+                    self.hide(afterDelay: true, reason: .timer) { }
+                    completion()
+                })
+            } else {
+                self.bottomConstraint?.constant = self.frame.height
+                UIView.animate(withDuration: self.animationDuration, animations: {
+                    view.layoutIfNeeded()
+                }, completion: { _ in
+                    if let data = self.currentlyDisplayedData, self.isCurrentlyShown == true {
+                        self.delegate?.snackBarDisappeared(with: data, reason: reasonToHide)
+                        self.currentlyDisplayedData = nil
+                    }
+                    self.isCurrentlyShown = false
+                    completion()
+                })
+            }
+        }
+        
+    }
+    
+    /// Hide the snack bar and check if it is the correct view displayed.
+    ///
+    /// - Parameters:
+    ///   - afterDelay: Delay to wait before hiding
+    ///   - reason: Why hiding
+    fileprivate func hide(afterDelay: Bool, reason: EndShowingType, completion: @escaping () -> Void) {
+        
+        let tmpID = self.snackBarID
+        let tmp = self.currentlyDisplayedData
+        
+        DispatchQueue.global().async {
+            if afterDelay {
+                Thread.sleep(forTimeInterval: self.timeSnackBarShown)
+            }
+            if tmpID == self.snackBarID && self.currentlyDisplayedData != nil && tmp != nil && tmp! == self.currentlyDisplayedData! {
+                self.animate(show: false, reasonToHide: reason) {
+                    completion()
+                }
+            } else {
+                completion()
+            }
         }
     }
+    
 }

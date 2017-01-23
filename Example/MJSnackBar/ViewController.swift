@@ -83,14 +83,16 @@ extension ViewController: UITableViewDelegate {
 extension ViewController: MJSnackBarDelegate {
     
     func snackBarDisappeared(with data: MJSnackBarData, reason: MJSnackBar.EndShowingType) {
-        print("👻 Snack disappeared \(data.message) - \(reason)")
+        print("👻 SnackBar disappeared \(data.message) - Reason : \(reason)")
     }
     
     func snackBarAppeared(with data: MJSnackBarData) {
-        print("👍 Snackbar appeared \(data.message)")
+        print("⭐ SnackBar appeared \(data.message)")
     }
     
     func snackBarActionTriggered(with data: MJSnackBarData) {
+        
+        print("👆 SnackBar touched \(data.message)")
         
         if let id = data.id {
             
