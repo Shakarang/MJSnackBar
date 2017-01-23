@@ -139,10 +139,11 @@ class MJSnackBar: UIView {
     /// Calls snackBarActionTriggered of the delegate if there is one
     @objc fileprivate func snackBarTouched() {
         
-        self.hide(afterDelay: false, reason: .user) { }
-        
         if let data = self.currentlyDisplayedData {
-            self.delegate?.snackBarActionTriggered(with: data)
+            if data.action != nil && data.action!.characters.count > 0 {
+                self.hide(afterDelay: false, reason: .user) { }
+                self.delegate?.snackBarActionTriggered(with: data)
+            }
         }
 
     }
