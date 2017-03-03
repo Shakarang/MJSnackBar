@@ -10,18 +10,18 @@
 public struct MJSnackBarData {
     
     /// Message you want to display to the user
-    var message: String
+    public var message: String
     
     /// Action message shown next to the message
-    var action: String? = nil
+    public var action: String? = nil
     
     /// Field to help you identify what data it is
-    var id: Int? = nil
+    public var id: Int? = nil
     
     /// Object linked to the data displayed. Only there to help you retrieving it easily.
-    var originalObject: Any? = nil
+    public var originalObject: Any? = nil
     
-    init(withIdentifier id: Int? = nil,
+    public init(withIdentifier id: Int? = nil,
          message: String,
          andActionMessage action: String? = nil,
          objectSaved originalObject: Any? = nil) {
@@ -37,7 +37,7 @@ public struct MJSnackBarData {
     ///   - left: left object
     ///   - right: right object
     /// - Returns: true if they have the same content
-    static func == (left: MJSnackBarData, right: MJSnackBarData) -> Bool {
+    public static func == (left: MJSnackBarData, right: MJSnackBarData) -> Bool {
         if left.id == right.id
             && left.message == right.message
             && left.action == right.action {
