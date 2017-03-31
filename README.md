@@ -5,10 +5,10 @@
  [![License](https://img.shields.io/cocoapods/l/MJSnackBar.svg?style=flat)](http://cocoapods.org/pods/MJSnackBar)
 
  [![Platform](https://img.shields.io/cocoapods/p/MJSnackBar.svg?style=flat)](http://cocoapods.org/pods/MJSnackBar)
- [![Devices](https://img.shields.io/badge/Devices-iPhone | iPad-brightgreen.svg)]()
+ [![Devices](https://img.shields.io/badge/Devices-iPhone%20%7C%20iPad-brightgreen.svg)]()
  [![Doc](https://img.shields.io/cocoapods/metrics/doc-percent/MJSnackBar.svg)](https://img.shields.io/cocoapods/metrics/doc-percent/MJSnackBar.svg)
 
- MJSnackBar is a pure Swift implementation of the [Android SnackBar](https://www.google.com/design/spec/components/snackbarstoasts.html#snackbarstoastsusage) which is very useful to display short informations and allow user to perform an action about it. It automatically disappear after a delay that you can set.
+ MJSnackBar is a pure Swift implementation of the [Android SnackBar](https://material.io/guidelines/components/snackbars-toasts.html) which is very useful to display short informations and allow user to perform an action about it. It automatically disappear after a delay that you can set.
 
  ![MJSnackBar demo](Resources/presentation.gif)		
 
