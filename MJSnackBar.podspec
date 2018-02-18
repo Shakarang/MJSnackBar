@@ -1,6 +1,6 @@
 # @Author: Maxime JUNGER <junger_m>
 # @Date:   02-04-2016
-# @Email:  maximejunger@gmail.com
+# @Email:  maxime@junger.io
 # @Last modified by:   junger_m
 # @Last modified time: 02-04-2016
 
