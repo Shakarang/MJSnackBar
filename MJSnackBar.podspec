@@ -16,7 +16,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "MJSnackBar"
-  s.version          = "1.0.2"
+  s.version          = "1.0.3"
   s.summary          = "iOS implementation of the Android SnackBar used in some Google Apps"
 
 # This description is used to generate tags and improve search results.
